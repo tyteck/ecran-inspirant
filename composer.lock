@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f50719ba0d311731bd6eefffadfc77ec",
+    "content-hash": "afe8166416e11c621ec4c6b8e75e3222",
     "packages": [
         {
             "name": "brick/math",
@@ -5426,6 +5426,64 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/2.2.6"
             },
             "time": "2023-01-03T09:29:04+00:00"
+        },
+        {
+            "name": "villfa/invert-color",
+            "version": "0.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/villfa/php-invert-color.git",
+                "reference": "58fe20730b5e555eab3c4b20bc82ed485e51fa7e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/villfa/php-invert-color/zipball/58fe20730b5e555eab3c4b20bc82ed485e51fa7e",
+                "reference": "58fe20730b5e555eab3c4b20bc82ed485e51fa7e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "php-parallel-lint/php-parallel-lint": "^1.2",
+                "phpstan/phpstan": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpstan/phpstan-strict-rules": "^1.0",
+                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0",
+                "vimeo/psalm": "^4.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "InvertColor\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien VILLEPINTE",
+                    "email": "fabien.villepinte@gmail.com"
+                }
+            ],
+            "description": "InvertColor - invert hex color code",
+            "homepage": "https://github.com/villfa/php-invert-color",
+            "keywords": [
+                "Inverse",
+                "color",
+                "colour",
+                "invert",
+                "opposite",
+                "reverse"
+            ],
+            "support": {
+                "issues": "https://github.com/villfa/php-invert-color/issues",
+                "source": "https://github.com/villfa/php-invert-color/tree/0.5.1"
+            },
+            "time": "2021-12-16T09:21:45+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

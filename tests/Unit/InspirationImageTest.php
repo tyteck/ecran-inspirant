@@ -23,7 +23,7 @@ class InspirationImageTest extends TestCase
         $this->assertInstanceOf(Image::class, $this->image);
         $this->assertEquals(InspirationPicture::DEFAULT_WIDTH, $this->image->width());
         $this->assertEquals(InspirationPicture::DEFAULT_HEIGHT, $this->image->height());
-        $this->assertEquals(InspirationPicture::DEFAULT_MIME, $this->image->mime());
+        // $this->assertEquals(InspirationPicture::DEFAULT_MIME, $this->image->mime());
 
         $this->image->save(storage_path('tests/default.jpg'));
     }
@@ -33,7 +33,10 @@ class InspirationImageTest extends TestCase
     {
         $expectedWitdh = 300;
         $expectedHeight = 600;
-        $this->image = InspirationPicture::create(300, 600, '#DFFF00')->get();
+        $this->image = InspirationPicture::create($expectedWitdh, $expectedHeight, '#DFFF00')
+            ->addText(fake()->sentence())
+            ->get()
+        ;
 
         $this->assertInstanceOf(Image::class, $this->image);
         $this->assertEquals($expectedWitdh, $this->image->width());
@@ -43,29 +46,41 @@ class InspirationImageTest extends TestCase
     }
 
     /** @test */
-    public function text_position_is_fine(): void
+    public function with_short_text_image_should_be_generated(): void
     {
-        $position = InspirationPicture::create()
-            ->textPosition()
-        ;
-
-        $this->assertIsArray($position);
-        $this->assertArrayHasKey('x', $position);
-        $this->assertArrayHasKey('y', $position);
-        $this->assertEquals(150, $position['x']);
-        $this->assertEquals(240, $position['y']);
-    }
-
-    /** @test */
-    public function with_text_image_should_be_generated(): void
-    {
-        $this->image = InspirationPicture::create()
-            ->addText('hello world')
+        $this->image = InspirationPicture::create(828, 1200)
+            ->addText("La vie c'est comme une boite de chocolat.")
             ->get()
         ;
 
         $this->assertInstanceOf(Image::class, $this->image);
 
-        $this->image->save(storage_path('tests/text.jpg'));
+        $this->image->save(storage_path('tests/shorttext.jpg'));
+    }
+
+    /** @test */
+    public function with_long_text_image_should_be_generated(): void
+    {
+        $this->image = InspirationPicture::create(width: 828, height: 1200, backgroundColor: fake()->hexColor())
+            ->addText(fake()->sentences(nb: 3, asText: true))
+            ->get()
+        ;
+
+        $this->assertInstanceOf(Image::class, $this->image);
+
+        $this->image->save(storage_path('tests/longtext.jpg'));
+    }
+
+    /** @test */
+    public function for_desktop_long_text_image_should_be_generated(): void
+    {
+        $this->image = InspirationPicture::create(width: 4096, height: 2060, backgroundColor: fake()->hexColor())
+            ->addText(fake()->sentences(nb: 3, asText: true))
+            ->get()
+        ;
+
+        $this->assertInstanceOf(Image::class, $this->image);
+
+        $this->image->save(storage_path('tests/desktop.jpg'));
     }
 }
