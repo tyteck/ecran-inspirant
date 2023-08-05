@@ -1,9 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\App;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,11 +17,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        // These seeders are used every time
+        Model::unguard();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $requiredSeeders = [
+            CategoriesTableSeeder::class,
+            QuotesTableSeeder::class,
+        ];
+
+        $additionalSeeders = [];
+        if (App::environment(['local'])) {
+            $additionalSeeders = [
+            ];
+        }
+
+        $seeders = array_merge($requiredSeeders, $additionalSeeders);
+        $this->call($seeders);
+        Model::reguard();
     }
 }
