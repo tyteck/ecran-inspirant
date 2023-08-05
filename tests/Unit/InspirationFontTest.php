@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit;
 
 use App\Services\InspirationFont;
-use Intervention\Image\Facades\Image;
-use Intervention\Image\Image as InterventionImage;
+use App\Services\InspirationPicture;
 use Tests\TestCase;
 
 /**
@@ -14,147 +13,172 @@ use Tests\TestCase;
  */
 class InspirationFontTest extends TestCase
 {
-    protected InterventionImage $image;
+    protected InspirationPicture $picture;
     protected string $forrest = "La vie, c'est comme une boîte de chocolats, on ne sait jamais sur quoi on va tomber! Forrest Gump (1994).";
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->image = Image::canvas(500, 500, fake()->hexColor())->encode('jpg', 80);
+        $this->picture = InspirationPicture::create(500, 500, fake()->hexColor());
     }
 
     /** @test */
     public function no_text(): void
     {
-        $font = InspirationFont::create($this->image, '');
+        $font = InspirationFont::create($this->picture, '');
 
         $this->assertNotNull($font);
         $this->assertInstanceOf(InspirationFont::class, $font);
         $this->assertEquals(0, $font->boxWidth());
         $this->assertEquals(0, $font->boxHeight());
 
-        $font->get()->applyToImage($this->image, $font->positionX(), $font->positionY());
-        $this->image->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $font->applyToImage();
+        $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
     }
 
     /** @test */
     public function small_text(): void
     {
-        $font = InspirationFont::create($this->image, 'La vie.');
+        $font = InspirationFont::create($this->picture, 'La vie.');
 
         $this->assertEquals(0, $font->iterations());
 
-        $font->get()->applyToImage($this->image, $font->positionX(), $font->positionY());
-        $this->image->save(storage_path('tests/lavie.jpg'));
+        $font->applyToImage();
+        $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
     }
 
     /** @test */
     public function align_top_left(): void
     {
-        $font = InspirationFont::create($this->image, $this->forrest);
-
-        $font->get()->applyToImage($this->image, $font->positionX(), $font->positionY());
-        $this->image->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        InspirationFont::create($this->picture, $this->forrest)->applyToImage();
+        $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
     }
 
     /** @test */
     public function align_top_center(): void
     {
-        $font = InspirationFont::create($this->image, $this->forrest)->alignTopCenter();
-
-        $font->get()->applyToImage($this->image, $font->positionX(), $font->positionY());
-        $this->image->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        InspirationFont::create($this->picture, $this->forrest)
+            ->alignTopCenter()
+            ->applyToImage()
+        ;
+        $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
     }
 
     /** @test */
     public function align_top_right(): void
     {
-        $font = InspirationFont::create($this->image, $this->forrest)->alignTopRight();
-
-        $font->get()->applyToImage($this->image, $font->positionX(), $font->positionY());
-        $this->image->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        InspirationFont::create($this->picture, $this->forrest)
+            ->alignTopRight()
+            ->applyToImage()
+        ;
+        $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
     }
 
     /** @test */
     public function align_bottom_left(): void
     {
-        $font = InspirationFont::create($this->image, $this->forrest)->alignBottomLeft();
-
-        $font->get()->applyToImage($this->image, $font->positionX(), $font->positionY());
-        $this->image->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        InspirationFont::create($this->picture, $this->forrest)
+            ->alignBottomLeft()
+            ->applyToImage()
+        ;
+        $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
     }
 
     /** @test */
     public function align_bottom_center(): void
     {
-        $font = InspirationFont::create($this->image, $this->forrest)->alignBottomCenter();
-
-        $font->get()->applyToImage($this->image, $font->positionX(), $font->positionY());
-        $this->image->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        InspirationFont::create($this->picture, $this->forrest)
+            ->alignBottomCenter()
+            ->applyToImage()
+        ;
+        $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
     }
 
     /** @test */
     public function align_bottom_right(): void
     {
-        $font = InspirationFont::create($this->image, $this->forrest)->alignBottomRight();
-
-        $font->get()->applyToImage($this->image, $font->positionX(), $font->positionY());
-        $this->image->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        InspirationFont::create($this->picture, $this->forrest)
+            ->alignBottomRight()
+            ->applyToImage()
+        ;
+        $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
     }
 
     /** @test */
     public function align_middle_left(): void
     {
-        $font = InspirationFont::create($this->image, $this->forrest)->alignMiddleLeft();
-
-        $font->get()->applyToImage($this->image, $font->positionX(), $font->positionY());
-        $this->image->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        InspirationFont::create($this->picture, $this->forrest)
+            ->alignMiddleLeft()
+            ->applyToImage()
+        ;
+        $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
     }
 
     /** @test */
     public function align_middle_center(): void
     {
-        $font = InspirationFont::create($this->image, $this->forrest)->alignMiddleCenter();
-
-        $font->get()->applyToImage($this->image, $font->positionX(), $font->positionY());
-        $this->image->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        InspirationFont::create($this->picture, $this->forrest)
+            ->alignMiddleCenter()
+            ->applyToImage()
+        ;
+        $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
     }
 
     /** @test */
     public function align_middle_right(): void
     {
-        $font = InspirationFont::create($this->image, $this->forrest)->alignMiddleRight();
-
-        $font->get()->applyToImage($this->image, $font->positionX(), $font->positionY());
-        $this->image->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        InspirationFont::create($this->picture, $this->forrest)
+            ->alignMiddleRight()
+            ->applyToImage()
+        ;
+        $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
     }
 
     /** @test */
-    public function with_some_text_on_creation_should_be_good(): void
+    public function long_text_centered(): void
     {
-        $font = InspirationFont::create($this->image, $this->forrest)->alignMiddleCenter();
+        $font = InspirationFont::create($this->picture, $this->forrest)->alignMiddleCenter();
 
         $this->assertNotNull($font);
         $this->assertInstanceOf(InspirationFont::class, $font);
         $this->assertGreaterThan(0, $font->boxWidth());
         $this->assertGreaterThan(0, $font->boxHeight());
 
-        $font->get()->applyToImage($this->image, $font->positionX(), $font->positionY());
-        $this->image->save(storage_path('tests/chocolat.jpg'));
+        $font->applyToImage();
+        $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
     }
 
-    public function with_text_function_should_be_good(): void
+    /** @test */
+    public function add_many_text(): void
     {
-        $font = InspirationFont::create($this->image, '')
-            ->text($this->forrest)
+        InspirationFont::create($this->picture, $this->forrest)
+            ->alignMiddleCenter()
+            ->applyToImage()
         ;
 
-        $this->assertNotNull($font);
-        $this->assertInstanceOf(InspirationFont::class, $font);
-        $this->assertGreaterThan(0, $font->boxWidth());
-        $this->assertGreaterThan(0, $font->boxHeight());
+        InspirationFont::create($this->picture, 'Watermark', 12)
+            ->alignBottomRight()
+            ->applyToImage()
+        ;
 
-        $font->get()->applyToImage($this->image, $font->positionX(), $font->positionY());
-        $this->image->save(storage_path('tests/chocolat2.jpg'));
+        InspirationFont::create($this->picture, 'debug', 12)
+            ->alignTopLeft()
+            ->applyToImage()
+        ;
+
+        $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
     }
 }

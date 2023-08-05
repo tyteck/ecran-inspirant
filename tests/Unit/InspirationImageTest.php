@@ -34,7 +34,6 @@ class InspirationImageTest extends TestCase
         $expectedWitdh = 300;
         $expectedHeight = 600;
         $this->image = InspirationPicture::create($expectedWitdh, $expectedHeight, '#DFFF00')
-            ->addText(fake()->sentence())
             ->get()
         ;
 
@@ -43,44 +42,5 @@ class InspirationImageTest extends TestCase
         $this->assertEquals($expectedHeight, $this->image->height());
 
         $this->image->save(storage_path('tests/modified.jpg'));
-    }
-
-    /** @test */
-    public function with_short_text_image_should_be_generated(): void
-    {
-        $this->image = InspirationPicture::create(828, 1200)
-            ->addText("La vie c'est comme une boite de chocolat.")
-            ->get()
-        ;
-
-        $this->assertInstanceOf(Image::class, $this->image);
-
-        $this->image->save(storage_path('tests/shorttext.jpg'));
-    }
-
-    /** @test */
-    public function with_long_text_image_should_be_generated(): void
-    {
-        $this->image = InspirationPicture::create(width: 828, height: 1200, backgroundColor: fake()->hexColor())
-            ->addText(fake()->sentences(nb: 3, asText: true))
-            ->get()
-        ;
-
-        $this->assertInstanceOf(Image::class, $this->image);
-
-        $this->image->save(storage_path('tests/longtext.jpg'));
-    }
-
-    /** @test */
-    public function for_desktop_long_text_image_should_be_generated(): void
-    {
-        $this->image = InspirationPicture::create(width: 4096, height: 2060, backgroundColor: fake()->hexColor())
-            ->addText(fake()->sentences(nb: 3, asText: true))
-            ->get()
-        ;
-
-        $this->assertInstanceOf(Image::class, $this->image);
-
-        $this->image->save(storage_path('tests/desktop.jpg'));
     }
 }
