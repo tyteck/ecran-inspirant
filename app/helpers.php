@@ -40,13 +40,19 @@ if (!function_exists('chunkText')) {
 }
 
 if (!function_exists('chunkSmart')) {
-    function chunkSmart(string $text): array
+    function chunkSmart(string $text, bool $asString = false, string $glue = PHP_EOL): array|string
     {
         $separators = ",;:.!?\n";
         // check for [,.\n]
         $matches = preg_split("/([^{$separators}]+[{$separators}]+)/", $text, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
         // cleaning
-        return array_map(fn ($match) => trim($match), $matches);
+        $cleaned = array_map(fn ($match) => trim($match), $matches);
+
+        if ($asString) {
+            return implode($glue, $cleaned);
+        }
+
+        return $cleaned;
     }
 }
