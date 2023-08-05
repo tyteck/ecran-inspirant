@@ -129,7 +129,7 @@ class InspirationFont
     public function alignBottomLeft(): self
     {
         $this->positionX = 0;
-        $this->positionY = $this->image->height() - 10;
+        $this->positionY = $this->image->height() - $this->font->getBoxSize()['height'] - 10;
         $this->font->align('left')
             ->valign('bottom')
         ;
