@@ -52,6 +52,11 @@ class InspirationFont
         return new static(...$params);
     }
 
+    public function availableWidth(): int
+    {
+        return intval(round($this->picture->width() * 0.95));
+    }
+
     public function text(string $text): self
     {
         $this->text = $text;
@@ -112,7 +117,7 @@ class InspirationFont
 
     public function alignTopCenter(): self
     {
-        $this->positionX = $this->picture->width() / 2;
+        $this->positionX = (int) round($this->picture->width() / 2);
         $this->positionY = 0;
         $this->imagickFont->align('center')
             ->valign('top')
@@ -135,7 +140,7 @@ class InspirationFont
     public function alignBottomLeft(): self
     {
         $this->positionX = 0;
-        $this->positionY = $this->picture->height() - $this->imagickFont->getBoxSize()['height'];
+        $this->positionY = (int) round($this->picture->height() - $this->imagickFont->getBoxSize()['height']);
         $this->imagickFont->align('left')
             ->valign('bottom')
         ;
@@ -145,8 +150,8 @@ class InspirationFont
 
     public function alignBottomCenter(): self
     {
-        $this->positionX = $this->picture->width() / 2;
-        $this->positionY = $this->picture->height() - $this->imagickFont->getBoxSize()['height'];
+        $this->positionX = (int) round($this->picture->width() / 2);
+        $this->positionY = (int) round($this->picture->height() - $this->imagickFont->getBoxSize()['height']);
         $this->imagickFont->align('center')
             ->valign('bottom')
         ;
@@ -156,8 +161,8 @@ class InspirationFont
 
     public function alignBottomRight(): self
     {
-        $this->positionX = $this->picture->width();
-        $this->positionY = $this->picture->height() - $this->imagickFont->getBoxSize()['height'];
+        $this->positionX = (int) round($this->picture->width());
+        $this->positionY = (int) round($this->picture->height() - $this->imagickFont->getBoxSize()['height']);
         $this->imagickFont->align('right')
             ->valign('bottom')
         ;
@@ -168,7 +173,7 @@ class InspirationFont
     public function alignMiddleLeft(): self
     {
         $this->positionX = 0;
-        $this->positionY = $this->picture->height() / 2 - $this->imagickFont->getBoxSize()['height'] / 2 - $this->textSize / 2;
+        $this->positionY = (int) round($this->picture->height() / 2 - $this->imagickFont->getBoxSize()['height'] / 2 - $this->textSize / 2);
         $this->imagickFont->align('left')
             ->valign('middle')
         ;
@@ -178,8 +183,8 @@ class InspirationFont
 
     public function alignMiddleCenter(): self
     {
-        $this->positionX = $this->picture->width() / 2;
-        $this->positionY = $this->picture->height() / 2 - $this->imagickFont->getBoxSize()['height'] / 2 - $this->textSize / 2;
+        $this->positionX = (int) round($this->picture->width() / 2);
+        $this->positionY = (int) round($this->picture->height() / 2 - $this->imagickFont->getBoxSize()['height'] / 2 - $this->textSize / 2);
         $this->imagickFont->align('center')
             ->valign('middle')
         ;
@@ -189,8 +194,8 @@ class InspirationFont
 
     public function alignMiddleRight(): self
     {
-        $this->positionX = $this->picture->width();
-        $this->positionY = $this->picture->height() / 2 - $this->imagickFont->getBoxSize()['height'] / 2 - $this->textSize / 2;
+        $this->positionX = (int) round($this->picture->width());
+        $this->positionY = (int) round($this->picture->height() / 2 - $this->imagickFont->getBoxSize()['height'] / 2 - $this->textSize / 2);
         $this->imagickFont->align('right')
             ->valign('middle')
         ;

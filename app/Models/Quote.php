@@ -11,6 +11,10 @@ class Quote extends Model
 {
     use HasFactory;
 
-    public const LANGUAGE_FR = 1;
-    public const LANGUAGE_EN = 2;
+    public static function getOne()
+    {
+        $item = self::query()->inRandomOrder()->take(1)->select('text', 'source')->first();
+
+        return $item['text'] . ' (' . $item['source'] . ')';
+    }
 }

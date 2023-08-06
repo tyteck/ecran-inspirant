@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         $requiredSeeders = [
-            CategoriesTableSeeder::class,
             QuotesTableSeeder::class,
         ];
 
