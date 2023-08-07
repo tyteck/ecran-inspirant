@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Exceptions\FontFileDoNotExistsException;
-use App\Exceptions\TextIsTooBigForImageWidthException;
 use Intervention\Image\Imagick\Font as imagickFont;
 
 class InspirationFont
@@ -16,7 +15,6 @@ class InspirationFont
 
     protected imagickFont $imagickFont;
     protected array $boxSize;
-    protected string $originalText;
     protected int $iterations = 0;
     protected int $positionX;
     protected int $positionY;
@@ -28,8 +26,6 @@ class InspirationFont
         protected ?string $textColor = null,
         protected string $textFont = self::DEFAULT_FONT,
     ) {
-        $this->originalText = $this->text;
-
         $this->checkFontExists();
 
         $this->imagickFont = (new imagickFont($this->text))
@@ -38,9 +34,9 @@ class InspirationFont
             ->size($this->textSize)
         ;
 
-        $this->alignMiddleCenter();
-
         $this->prepareText();
+
+        $this->alignMiddleCenter();
 
         $this->setTextColor();
 
@@ -60,7 +56,6 @@ class InspirationFont
     public function text(string $text): self
     {
         $this->text = $text;
-        $this->originalText = $text;
 
         $this->prepareText();
 
@@ -108,8 +103,8 @@ class InspirationFont
     {
         $this->positionX = 0;
         $this->positionY = 0;
-        $this->imagickFont->align('left')
-            ->valign('top')
+        $this->imagickFont->valign('top')
+            ->align('left')
         ;
 
         return $this;
@@ -119,8 +114,8 @@ class InspirationFont
     {
         $this->positionX = (int) round($this->picture->width() / 2);
         $this->positionY = 0;
-        $this->imagickFont->align('center')
-            ->valign('top')
+        $this->imagickFont->valign('top')
+            ->align('center')
         ;
 
         return $this;
@@ -130,8 +125,8 @@ class InspirationFont
     {
         $this->positionX = $this->picture->width();
         $this->positionY = 0;
-        $this->imagickFont->align('right')
-            ->valign('top')
+        $this->imagickFont->valign('top')
+            ->align('right')
         ;
 
         return $this;
@@ -141,8 +136,8 @@ class InspirationFont
     {
         $this->positionX = 0;
         $this->positionY = (int) round($this->picture->height() - $this->imagickFont->getBoxSize()['height']);
-        $this->imagickFont->align('left')
-            ->valign('bottom')
+        $this->imagickFont->valign('bottom')
+            ->align('left')
         ;
 
         return $this;
@@ -150,10 +145,10 @@ class InspirationFont
 
     public function alignBottomCenter(): self
     {
-        $this->positionX = (int) round($this->picture->width() / 2);
-        $this->positionY = (int) round($this->picture->height() - $this->imagickFont->getBoxSize()['height']);
-        $this->imagickFont->align('center')
-            ->valign('bottom')
+        $this->positionX = $this->imageCenter();
+        $this->positionY = $this->picture->height() - $this->imagickFont->getBoxSize()['height'];
+        $this->imagickFont->valign('bottom')
+            ->align('center')
         ;
 
         return $this;
@@ -161,10 +156,10 @@ class InspirationFont
 
     public function alignBottomRight(): self
     {
-        $this->positionX = (int) round($this->picture->width());
+        $this->positionX = $this->picture->width();
         $this->positionY = (int) round($this->picture->height() - $this->imagickFont->getBoxSize()['height']);
-        $this->imagickFont->align('right')
-            ->valign('bottom')
+        $this->imagickFont->valign('bottom')
+            ->align('right')
         ;
 
         return $this;
@@ -173,9 +168,9 @@ class InspirationFont
     public function alignMiddleLeft(): self
     {
         $this->positionX = 0;
-        $this->positionY = (int) round($this->picture->height() / 2 - $this->imagickFont->getBoxSize()['height'] / 2 - $this->textSize / 2);
-        $this->imagickFont->align('left')
-            ->valign('middle')
+        $this->positionY = $this->imageMiddle() - $this->boxHeightMiddle();
+        $this->imagickFont->valign('top')
+            ->align('left')
         ;
 
         return $this;
@@ -183,10 +178,10 @@ class InspirationFont
 
     public function alignMiddleCenter(): self
     {
-        $this->positionX = (int) round($this->picture->width() / 2);
-        $this->positionY = (int) round($this->picture->height() / 2 - $this->imagickFont->getBoxSize()['height'] / 2 - $this->textSize / 2);
-        $this->imagickFont->align('center')
-            ->valign('middle')
+        $this->positionX = $this->imageCenter();
+        $this->positionY = $this->imageMiddle() - $this->boxHeightMiddle();
+        $this->imagickFont->valign('top')
+            ->align('center')
         ;
 
         return $this;
@@ -194,14 +189,33 @@ class InspirationFont
 
     public function alignMiddleRight(): self
     {
-        $this->positionX = (int) round($this->picture->width());
-        $this->positionY = (int) round($this->picture->height() / 2 - $this->imagickFont->getBoxSize()['height'] / 2 - $this->textSize / 2);
-        $this->imagickFont->align('right')
-            ->valign('middle')
+        $this->positionX = $this->picture->width();
+        $this->positionY = $this->imageMiddle() - $this->boxHeightMiddle();
+        $this->imagickFont->valign('top')
+            ->align('right')
         ;
 
         return $this;
     }
+
+    /* public function addDebugInfo(): self
+    {
+        $debugText = 'picture dimensions : ' . $this->picture->width() . 'x' . $this->picture->height() . PHP_EOL .
+            'picture middle : ' . $this->imageCenter() . ':' . $this->imageMiddle() . PHP_EOL .
+            'text position : ' . $this->positionX . ':' . $this->positionY . PHP_EOL .
+            'text font size : ' . $this->textSize . PHP_EOL .
+            'text box size : ' . $this->imagickFont->getBoxSize()['width'] . 'x' . $this->imagickFont->getBoxSize()['height'] . PHP_EOL;
+        (new imagickFont($debugText))
+            ->file($this->fontPath())
+            ->color('#000000')
+            ->size(48)
+            ->valign('top')
+            ->align('left')
+            ->applyToImage($this->picture->get(), 0, 0)
+        ;
+
+        return $this;
+    } */
 
     public function applyToImage(): void
     {
@@ -226,6 +240,21 @@ class InspirationFont
     | protected
     |--------------------------------------------------------------------------
     */
+    protected function imageCenter(): int
+    {
+        return intval(round($this->picture->width() / 2));
+    }
+
+    protected function imageMiddle(): int
+    {
+        return intval(round($this->picture->height() / 2));
+    }
+
+    protected function boxHeightMiddle(): int
+    {
+        return intval(round($this->imagickFont->getBoxSize()['height'] / 2));
+    }
+
     protected function prepareText(): void
     {
         if ($this->doesTextFit()) {
@@ -241,7 +270,7 @@ class InspirationFont
 
         // not fitting, let's chunk by words
         // 4 then 3 words block
-        foreach ([4, 3] as $assemble) {
+        foreach ([4] as $assemble) {
             $chunks = chunkText(
                 text: $this->text,
                 separator: " \n",
@@ -255,32 +284,20 @@ class InspirationFont
         }
 
         // finally we need to reduce police font size
-        $this->reduceFontSize();
-    }
+        $this->textSize -= 8;
+        $this->imagickFont->size($this->textSize);
 
-    protected function reduceFontSize(): void
-    {
-        $this->text = chunkSmart($this->originalText, asString: true);
-        $this->imagickFont->text($this->text);
-        while (1) {
-            $this->textSize -= 8;
-            throw_if(
-                $this->textSize < self::MINIMUM_TEXT_SIZE,
-                new TextIsTooBigForImageWidthException(
-                    'Text is too long for image width and font size cannot be reduced below ' . self::MINIMUM_TEXT_SIZE . '.'
-                )
-            );
-            $this->imagickFont->size($this->textSize);
-            if ($this->doesTextFit()) {
-                break;
-            }
-        }
+        // and rerun
+        $this->prepareText();
     }
 
     protected function doesTextFit(): bool
     {
         $this->boxSize = $this->imagickFont->getBoxSize();
-        if ($this->boxSize['width'] < $this->picture->width()) {
+        if (
+            $this->boxSize['width'] < $this->picture->width()
+            && $this->boxSize['height'] < $this->picture->height()
+        ) {
             // it fits after chunk smart ! let's go.
             return true;
         }

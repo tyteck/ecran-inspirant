@@ -61,12 +61,12 @@ if (!function_exists('getContrastColor')) {
     function getContrastColor(string $hexColor)
     {
         $hexColor = ltrim($hexColor, '#');
-        
+
         // hexColor RGB
         $R1 = hexdec(substr($hexColor, 1, 2));
         $G1 = hexdec(substr($hexColor, 3, 2));
         $B1 = hexdec(substr($hexColor, 5, 2));
-        
+
         // Black RGB
         $blackColor = '#000000';
         $R2BlackColor = hexdec(substr($blackColor, 1, 2));

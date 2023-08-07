@@ -14,12 +14,13 @@ use Tests\TestCase;
 class InspirationFontTest extends TestCase
 {
     protected InspirationPicture $picture;
-    protected string $forrest = "La vie, c'est comme une boîte de chocolats, on ne sait jamais sur quoi on va tomber! Forrest Gump (1994).";
+    protected string $text;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->picture = InspirationPicture::create(500, 500, fake()->hexColor());
+        $this->text = 'Vous ne pouvez pas être ce gamin qui reste figé en haut du toboggan en réfléchissant. Vous devez glisser. (Tina Fey)';
+        $this->picture = InspirationPicture::create(828, 1792, fake()->hexColor());
     }
 
     /** @test */
@@ -50,9 +51,9 @@ class InspirationFontTest extends TestCase
     }
 
     /** @test */
-    public function align_top_left(): void
+    public function default_position(): void
     {
-        InspirationFont::create($this->picture, $this->forrest)->applyToImage();
+        InspirationFont::create($this->picture, $this->text)->applyToImage();
         $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
         $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
     }
@@ -60,7 +61,7 @@ class InspirationFontTest extends TestCase
     /** @test */
     public function align_top_center(): void
     {
-        InspirationFont::create($this->picture, $this->forrest)
+        InspirationFont::create($this->picture, $this->text)
             ->alignTopCenter()
             ->applyToImage()
         ;
@@ -71,7 +72,7 @@ class InspirationFontTest extends TestCase
     /** @test */
     public function align_top_right(): void
     {
-        InspirationFont::create($this->picture, $this->forrest)
+        InspirationFont::create($this->picture, $this->text)
             ->alignTopRight()
             ->applyToImage()
         ;
@@ -82,7 +83,7 @@ class InspirationFontTest extends TestCase
     /** @test */
     public function align_bottom_left(): void
     {
-        InspirationFont::create($this->picture, $this->forrest)
+        InspirationFont::create($this->picture, $this->text)
             ->alignBottomLeft()
             ->applyToImage()
         ;
@@ -93,7 +94,7 @@ class InspirationFontTest extends TestCase
     /** @test */
     public function align_bottom_center(): void
     {
-        InspirationFont::create($this->picture, $this->forrest)
+        InspirationFont::create($this->picture, $this->text)
             ->alignBottomCenter()
             ->applyToImage()
         ;
@@ -104,7 +105,7 @@ class InspirationFontTest extends TestCase
     /** @test */
     public function align_bottom_right(): void
     {
-        InspirationFont::create($this->picture, $this->forrest)
+        InspirationFont::create($this->picture, $this->text)
             ->alignBottomRight()
             ->applyToImage()
         ;
@@ -115,7 +116,7 @@ class InspirationFontTest extends TestCase
     /** @test */
     public function align_middle_left(): void
     {
-        InspirationFont::create($this->picture, $this->forrest)
+        InspirationFont::create($this->picture, $this->text)
             ->alignMiddleLeft()
             ->applyToImage()
         ;
@@ -126,7 +127,7 @@ class InspirationFontTest extends TestCase
     /** @test */
     public function align_middle_center(): void
     {
-        InspirationFont::create($this->picture, $this->forrest)
+        InspirationFont::create($this->picture, $this->text)
             ->alignMiddleCenter()
             ->applyToImage()
         ;
@@ -137,7 +138,7 @@ class InspirationFontTest extends TestCase
     /** @test */
     public function align_middle_right(): void
     {
-        InspirationFont::create($this->picture, $this->forrest)
+        InspirationFont::create($this->picture, $this->text)
             ->alignMiddleRight()
             ->applyToImage()
         ;
@@ -146,24 +147,9 @@ class InspirationFontTest extends TestCase
     }
 
     /** @test */
-    public function long_text_centered(): void
-    {
-        $font = InspirationFont::create($this->picture, $this->forrest)->alignMiddleCenter();
-
-        $this->assertNotNull($font);
-        $this->assertInstanceOf(InspirationFont::class, $font);
-        $this->assertGreaterThan(0, $font->boxWidth());
-        $this->assertGreaterThan(0, $font->boxHeight());
-
-        $font->applyToImage();
-        $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
-        $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
-    }
-
-    /** @test */
     public function add_many_text(): void
     {
-        InspirationFont::create($this->picture, $this->forrest)
+        InspirationFont::create($this->picture, $this->text)
             ->alignMiddleCenter()
             ->applyToImage()
         ;

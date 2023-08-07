@@ -41,6 +41,7 @@ $config
         'concat_space' => ['spacing' => 'one'],
         'general_phpdoc_annotation_remove' => ['annotations' => ['expectedDeprecation']],
         'increment_style' => ['style' => 'post'],
+        'multiline_whitespace_before_semicolons' => ['strategy' => 'new_line_for_chained_calls'],
         'php_unit_method_casing' => ['case' => 'snake_case'],
         'php_unit_test_class_requires_covers' => false,
         'global_namespace_import' => ['import_classes'=>true],

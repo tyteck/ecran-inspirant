@@ -13,7 +13,12 @@ class Quote extends Model
 
     public static function getOne()
     {
-        $item = self::query()->inRandomOrder()->take(1)->select('text', 'source')->first();
+        $item = self::query()
+            ->inRandomOrder()
+            ->take(1)
+            ->select('text', 'source')
+            ->first()
+        ;
 
         return $item['text'] . ' (' . $item['source'] . ')';
     }

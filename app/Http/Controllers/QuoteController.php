@@ -18,6 +18,8 @@ class QuoteController extends Controller
 
         // get random color
 
+        // get random font
+
         // get quote
         $text = Quote::getOne();
 
@@ -27,6 +29,18 @@ class QuoteController extends Controller
         // add text
         InspirationFont::create($picture, $text)
             ->alignMiddleCenter()
+            ->applyToImage()
+        ;
+
+        // add text
+        InspirationFont::create($picture, $text)
+            ->alignMiddleCenter()
+            ->applyToImage()
+        ;
+
+        // add Watermark
+        InspirationFont::create($picture, config('app.domain'), 48)
+            ->alignBottomRight()
             ->applyToImage()
         ;
 

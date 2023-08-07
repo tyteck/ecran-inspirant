@@ -60,7 +60,7 @@ class QuotesTableSeeder extends Seeder
             ['text' => "La vraie richesse d'un homme, en ce monde, se mesure au bien qu'il a fait autour de lui.", 'source' => 'Mahomet'],
             ['text' => "Ils ne savaient pas que c'était impossible, alors ils l'ont fait.", 'source' => 'Mark Twain'],
             ['text' => "N'aimez jamais quelqu'un qui vous traite comme si vous étiez ordinaire.", 'source' => 'Oscar Wilde'],
-            ['text' => "Il n'existe que deux choses infinies, l'univers et la bêtise humaine... mais pour l'univers, je n'ai pas de certitude absolue.", 'source' => 'Albert Einstein'],
+            ['text' => "Il n'existe que deux choses infinies, l'univers et la bêtise humaine. Mais pour l'univers, je n'ai pas de certitude absolue.", 'source' => 'Albert Einstein'],
             ['text' => 'Ne vis pas pour que ta présence se remarque, mais pour que ton absence se ressente.', 'source' => 'Bob Marley'],
             ['text' => 'Je pense, donc je suis.', 'source' => 'René Descartes '],
         ];
