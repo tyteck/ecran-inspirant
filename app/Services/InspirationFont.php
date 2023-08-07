@@ -268,19 +268,16 @@ class InspirationFont
             return;
         }
 
-        // not fitting, let's chunk by words
-        // 4 then 3 words block
-        foreach ([4] as $assemble) {
-            $chunks = chunkText(
-                text: $this->text,
-                separator: " \n",
-                assemble: $assemble
-            );
-            $this->text = implode(PHP_EOL, $chunks);
-            $this->imagickFont->text($this->text);
-            if ($this->doesTextFit()) {
-                return;
-            }
+        // not fitting, let's chunk by 4 words
+        $chunks = chunkText(
+            text: $this->text,
+            separator: " \n",
+            assemble: 4
+        );
+        $this->text = implode(PHP_EOL, $chunks);
+        $this->imagickFont->text($this->text);
+        if ($this->doesTextFit()) {
+            return;
         }
 
         // finally we need to reduce police font size
@@ -298,7 +295,6 @@ class InspirationFont
             $this->boxSize['width'] < $this->picture->width()
             && $this->boxSize['height'] < $this->picture->height()
         ) {
-            // it fits after chunk smart ! let's go.
             return true;
         }
         $this->iterations++;
