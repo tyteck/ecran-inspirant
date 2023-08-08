@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
+use App\Services\FontPathSelector;
 use App\Services\InspirationFont;
 use App\Services\InspirationPicture;
 use Tests\TestCase;
@@ -13,6 +14,7 @@ use Tests\TestCase;
  */
 class InspirationFontTest extends TestCase
 {
+    protected string $fontPath;
     protected InspirationPicture $picture;
     protected string $text;
 
@@ -21,12 +23,13 @@ class InspirationFontTest extends TestCase
         parent::setUp();
         $this->text = 'Vous ne pouvez pas être ce gamin qui reste figé en haut du toboggan en réfléchissant. Vous devez glisser. (Tina Fey)';
         $this->picture = InspirationPicture::create(828, 1792, fake()->hexColor());
+        $this->fontPath = (new FontPathSelector())->getOneFont();
     }
 
     /** @test */
     public function no_text(): void
     {
-        $font = InspirationFont::create($this->picture, '');
+        $font = InspirationFont::create(picture: $this->picture, fontPath: $this->fontPath, text: '');
 
         $this->assertNotNull($font);
         $this->assertInstanceOf(InspirationFont::class, $font);
@@ -41,7 +44,7 @@ class InspirationFontTest extends TestCase
     /** @test */
     public function small_text(): void
     {
-        $font = InspirationFont::create($this->picture, 'La vie.');
+        $font = InspirationFont::create(picture: $this->picture, fontPath: $this->fontPath, text: 'La vie.');
 
         $this->assertEquals(0, $font->iterations());
 
@@ -53,7 +56,7 @@ class InspirationFontTest extends TestCase
     /** @test */
     public function default_position(): void
     {
-        InspirationFont::create($this->picture, $this->text)->applyToImage();
+        InspirationFont::create(picture: $this->picture, fontPath: $this->fontPath, text: $this->text)->applyToImage();
         $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
         $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
     }
@@ -61,7 +64,7 @@ class InspirationFontTest extends TestCase
     /** @test */
     public function align_top_center(): void
     {
-        InspirationFont::create($this->picture, $this->text)
+        InspirationFont::create(picture: $this->picture, fontPath: $this->fontPath, text: $this->text)
             ->alignTopCenter()
             ->applyToImage()
         ;
@@ -72,7 +75,7 @@ class InspirationFontTest extends TestCase
     /** @test */
     public function align_top_right(): void
     {
-        InspirationFont::create($this->picture, $this->text)
+        InspirationFont::create(picture: $this->picture, fontPath: $this->fontPath, text: $this->text)
             ->alignTopRight()
             ->applyToImage()
         ;
@@ -83,7 +86,7 @@ class InspirationFontTest extends TestCase
     /** @test */
     public function align_bottom_left(): void
     {
-        InspirationFont::create($this->picture, $this->text)
+        InspirationFont::create(picture: $this->picture, fontPath: $this->fontPath, text: $this->text)
             ->alignBottomLeft()
             ->applyToImage()
         ;
@@ -94,7 +97,7 @@ class InspirationFontTest extends TestCase
     /** @test */
     public function align_bottom_center(): void
     {
-        InspirationFont::create($this->picture, $this->text)
+        InspirationFont::create(picture: $this->picture, fontPath: $this->fontPath, text: $this->text)
             ->alignBottomCenter()
             ->applyToImage()
         ;
@@ -105,7 +108,7 @@ class InspirationFontTest extends TestCase
     /** @test */
     public function align_bottom_right(): void
     {
-        InspirationFont::create($this->picture, $this->text)
+        InspirationFont::create(picture: $this->picture, fontPath: $this->fontPath, text: $this->text)
             ->alignBottomRight()
             ->applyToImage()
         ;
@@ -116,7 +119,7 @@ class InspirationFontTest extends TestCase
     /** @test */
     public function align_middle_left(): void
     {
-        InspirationFont::create($this->picture, $this->text)
+        InspirationFont::create(picture: $this->picture, fontPath: $this->fontPath, text: $this->text)
             ->alignMiddleLeft()
             ->applyToImage()
         ;
@@ -127,7 +130,7 @@ class InspirationFontTest extends TestCase
     /** @test */
     public function align_middle_center(): void
     {
-        InspirationFont::create($this->picture, $this->text)
+        InspirationFont::create(picture: $this->picture, fontPath: $this->fontPath, text: $this->text)
             ->alignMiddleCenter()
             ->applyToImage()
         ;
@@ -138,7 +141,7 @@ class InspirationFontTest extends TestCase
     /** @test */
     public function align_middle_right(): void
     {
-        InspirationFont::create($this->picture, $this->text)
+        InspirationFont::create(picture: $this->picture, fontPath: $this->fontPath, text: $this->text)
             ->alignMiddleRight()
             ->applyToImage()
         ;
@@ -149,17 +152,17 @@ class InspirationFontTest extends TestCase
     /** @test */
     public function add_many_text(): void
     {
-        InspirationFont::create($this->picture, $this->text)
+        InspirationFont::create(picture: $this->picture, fontPath: $this->fontPath, text: $this->text)
             ->alignMiddleCenter()
             ->applyToImage()
         ;
 
-        InspirationFont::create($this->picture, 'Watermark', 12)
+        InspirationFont::create(picture: $this->picture, fontPath: $this->fontPath, text: 'Watermark', textSize: 12)
             ->alignBottomRight()
             ->applyToImage()
         ;
 
-        InspirationFont::create($this->picture, 'debug', 12)
+        InspirationFont::create(picture: $this->picture, fontPath: $this->fontPath, text: 'debug', textSize: 12)
             ->alignTopLeft()
             ->applyToImage()
         ;

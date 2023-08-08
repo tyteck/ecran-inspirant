@@ -21,15 +21,13 @@ class InspirationFont
 
     private function __construct(
         protected InspirationPicture $picture,
+        protected string $fontPath,
         protected string $text = '',
         protected int $textSize = self::DEFAULT_TEXT_SIZE,
         protected ?string $textColor = null,
-        protected string $textFont = self::DEFAULT_FONT,
     ) {
-        $this->checkFontExists();
-
         $this->imagickFont = (new imagickFont($this->text))
-            ->file(public_path("fonts/{$this->textFont}"))
+            ->file($this->fontPath)
             ->color($this->textColor)
             ->size($this->textSize)
         ;
@@ -232,7 +230,7 @@ class InspirationFont
 
     public function fontPath(): string
     {
-        return public_path('fonts/' . $this->textFont);
+        return public_path('fonts/' . $this->fontPath);
     }
 
     /*
