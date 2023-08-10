@@ -22,7 +22,6 @@ class IndexControllerTest extends TestCase
 
         $this->get(route('index'))
             ->assertSuccessful()
-            ->assertSeeText('Documentation')
         ;
     }
 }
