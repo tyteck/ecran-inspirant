@@ -3,7 +3,7 @@
 
 @include('partials.head')
 
-<body class="max-w-screen-xl antialiased bg-gray-50 text-{{ $color }}-100 mx-auto p-5">
+<body class="max-w-screen-xl antialiased bg-gray-50 text-{{ $color }}-100 mx-auto p-1 md:p-4">
 
     @include ('partials.flash')
 
@@ -12,9 +12,5 @@
     @include ('partials.footer')
 
 </body>
-
-@if (App::environment('testing'))
-    @include ('partials.testing')
-@endif
 
 </html>
