@@ -3,7 +3,7 @@
 
 @include('partials.head')
 
-<body class="max-w-screen-xl antialiased bg-{{ $color }}-900 text-{{ $color }}-100 mx-auto p-5">
+<body class="max-w-screen-xl antialiased bg-gray-50 text-{{ $color }}-100 mx-auto p-5">
 
     @include ('partials.flash')
 

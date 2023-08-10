@@ -2,7 +2,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('pageTitle') - Courbes Ecologiques</title>
+    <title>@yield('pageTitle') - Ecran Inspirant</title>
     <meta name="description" content="Des fonds d'écran inspirants">
     <meta name="keywords" content="Inspirantion, fond d'écran, raccourcis, iphone">
     <meta name="author" content="Frederick Tyteca">
