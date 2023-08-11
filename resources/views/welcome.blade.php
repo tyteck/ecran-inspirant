@@ -24,8 +24,8 @@
                     @include('partials/comment')
 
                 </div>
-                <div class="md:block md:flex-shrink-0 md:flex-grow-0 md:w-1/2">
-                    <img src="/images/welcome-default.jpg">
+                <div class="md:block md:flex-shrink-0 md:flex-grow-0 md:w-1/2 px-4">
+                    <img class="rounded-lg" src="/images/welcome.jpg">
                 </div>
             </div>
         </div>
