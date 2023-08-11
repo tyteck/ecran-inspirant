@@ -16,10 +16,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', [HomeController::class, 'show'])->name('index');
 
 Route::domain('www.' . config('app.domain'))
     ->group(function (): void {
-        Route::get('/', [HomeController::class, 'show'])->name('index');
+        Route::get('/', [HomeController::class, 'show'])->name('www.index');
     })
 ;
 
