@@ -9,9 +9,9 @@
 
         Installe un fond d'écran inspirant sur ton téléphone.
 
-        @include('partials/comment')
-        <img src="/images/welcome-mobile.jpg" class="mx-auto">
+        <img src="/images/welcome.jpg" class="rounded mx-auto">
 
+        @include('partials/comment')
     </div>
 
     <div class="hidden md:block bg-{{ $color }}-900 rounded-lg">
