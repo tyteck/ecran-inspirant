@@ -19,10 +19,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::domain('www.' . config('app.domain'))
     ->group(function (): void {
-        Route::get('/', [HomeController::class, 'show'])->name('index');
+        Route::get('/', [HomeController::class, 'show'])->name('www.index');
     })
 ;
 
 Route::domain('get.' . config('app.domain'))
     ->group(fn () => Route::get('/', [QuoteController::class, 'get'])->name('get'))
 ;
+
+Route::get('/', [HomeController::class, 'show'])->name('index');
