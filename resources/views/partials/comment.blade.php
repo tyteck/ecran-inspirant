@@ -2,7 +2,7 @@
     <strong>Le principe :</strong>
     <ul>
         <li>A ton rythme (toutes les heures/les jours/les semaines/les ans/...)</li>
-        <li>Obtiens un fond d'écran inspirant pour votre téléphone</li>
+        <li>Obtiens un fond d'écran inspirant pour ton téléphone</li>
     </ul>
 </div>
 
@@ -10,9 +10,11 @@
     <strong>Comment faire ?</strong>
     <ul class="list-disc list-inside">
         <li><strong>sous iOS</strong> : Simple, il te suffit d'installer l'application (officielle)
-            <a href="https://apps.apple.com/fr/app/raccourcis/id915249334" target="_blank">"Raccourcis"</a> (si tu ne
-            l'as pas déjà), puis, tu installes ce
-            <a href="https://www.icloud.com/shortcuts/841f14de93454f0eb3df6b433b41f9f7" target="_blank">raccourci</a>. Le
+            <a href="https://apps.apple.com/fr/app/raccourcis/id915249334" class="underline"
+                target="_blank">"Raccourcis"</a> (si tu ne
+            l'as pas déjà), puis, tu installes
+            <a href="https://www.icloud.com/shortcuts/841f14de93454f0eb3df6b433b41f9f7" class="underline"
+                target="_blank">ce raccourci</a>. Le
             tour est joué.
         </li>
         <li><strong>sous android</strong> : (bientôt)</li>
