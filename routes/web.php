@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', [HomeController::class, 'show'])->name('index');
 
 Route::domain('www.' . config('app.domain'))
     ->group(function (): void {
@@ -27,3 +26,5 @@ Route::domain('www.' . config('app.domain'))
 Route::domain('get.' . config('app.domain'))
     ->group(fn () => Route::get('/', [QuoteController::class, 'get'])->name('get'))
 ;
+
+Route::get('/', [HomeController::class, 'show'])->name('index');
