@@ -26,8 +26,8 @@ class HomeController extends Controller
 
         $color = Colors::random();
 
-        $width = 500;
-        $height = 650;
+        $width = 400;
+        $height = intval(round($width * 1.77777, 0)); // linkedin vertical image ratio
 
         $inspirationPicture = CreateImage::create($width, $height, $color)->get();
         $inspirationPicture->save(public_path('images/welcome.jpg'));

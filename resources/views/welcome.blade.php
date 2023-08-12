@@ -25,7 +25,7 @@
 
                 </div>
                 <div class="md:block md:flex-shrink-0 md:flex-grow-0 md:w-1/2 px-4">
-                    <img class="rounded-lg" src="/images/welcome.jpg">
+                    <img class="rounded-lg mx-auto" src="/images/welcome.jpg">
                 </div>
             </div>
         </div>

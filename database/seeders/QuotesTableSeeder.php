@@ -62,7 +62,8 @@ class QuotesTableSeeder extends Seeder
             ['text' => "N'aimez jamais quelqu'un qui vous traite comme si vous étiez ordinaire.", 'source' => 'Oscar Wilde'],
             ['text' => "Il n'existe que deux choses infinies, l'univers et la bêtise humaine. Mais pour l'univers, je n'ai pas de certitude absolue.", 'source' => 'Albert Einstein'],
             ['text' => 'Ne vis pas pour que ta présence se remarque, mais pour que ton absence se ressente.', 'source' => 'Bob Marley'],
-            ['text' => 'Je pense, donc je suis.', 'source' => 'René Descartes '],
+            ['text' => 'Je pense, donc je suis.', 'source' => 'René Descartes'],
+            ['text' => 'Mieux vaux fait que parfait.', 'source' => 'Sheryl Sandberg'],
         ];
 
         $index = 1;
