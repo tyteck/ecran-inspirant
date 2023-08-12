@@ -16,6 +16,9 @@
     <meta property="og:image" content="https://ecran-inspirant.fr/images/welcome.jpg" />
     <meta property="og:description" content="{{ $description }}" />
     <meta property="og:locale" content="fr_FR" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="{{ $width }}" />
+    <meta property="og:image:height" content="{{ $height }}" />
 
     @vite(['resources/js/app.js'])
 

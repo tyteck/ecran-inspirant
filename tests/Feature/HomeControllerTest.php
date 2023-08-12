@@ -32,6 +32,10 @@ class HomeControllerTest extends TestCase
                 'meta property="og:url"',
                 'meta property="og:image"',
                 'meta property="og:description"',
+                'meta property="og:locale"',
+                'meta property="og:image:type"',
+                'meta property="og:image:width"',
+                'meta property="og:image:height"',
                 'meta name="csrf-token"',
             ], escape: false)
         ;

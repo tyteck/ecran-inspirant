@@ -26,11 +26,14 @@ class HomeController extends Controller
 
         $color = Colors::random();
 
-        $inspirationPicture = CreateImage::create(500, 650, $color)->get();
+        $width = 500;
+        $height = 650;
+
+        $inspirationPicture = CreateImage::create($width, $height, $color)->get();
         $inspirationPicture->save(public_path('images/welcome.jpg'));
 
         $pageTitle = 'Ecran inspirant ' . $emote;
 
-        return view('welcome', compact('pageTitle', 'color', 'description'));
+        return view('welcome', compact('pageTitle', 'color', 'description', 'width', 'height'));
     }
 }
