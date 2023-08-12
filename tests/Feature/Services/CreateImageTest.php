@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Service;
+namespace Tests\Feature\Services;
 
 use App\Enums\Colors;
 use App\Models\Quote;
