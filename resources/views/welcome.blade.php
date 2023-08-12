@@ -31,7 +31,4 @@
         </div>
     </div>
 
-    <div class="px-4 mx-auto">
-
-    </div>
 @endsection

@@ -10,6 +10,14 @@
     <!--Favicon-->
     <link rel="icon" type="image/png" href="/favicon.png" />
 
+
+    <meta property="og:title" content="Ecran Inspirant" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ecran-inspirant.fr" />
+    <meta property="og:image" content="https://ecran-inspirant.fr/images/welcome.jpg" />
+    <meta property="og:description" content="un superbe fond d'écran différent et inspirant." />
+
+
     @vite(['resources/js/app.js'])
 
     <!-- CSRF Token -->
