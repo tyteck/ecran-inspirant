@@ -19,6 +19,9 @@ class HomeController extends Controller
 
     public function show(): View|Factory
     {
+        $description = "Tu voudrais avoir un fond d'écran original et inspirant.
+            Tu voudrais qu'il change tous les jours sans intervention de ta part ? 
+            Ecran-inpirant est là pour ca et en plus c'est gratuit.";
         $emote = $this->emotes[array_rand($this->emotes)];
 
         $color = Colors::random();
@@ -28,6 +31,6 @@ class HomeController extends Controller
 
         $pageTitle = 'Ecran inspirant ' . $emote;
 
-        return view('welcome', compact('pageTitle', 'color'));
+        return view('welcome', compact('pageTitle', 'color', 'description'));
     }
 }
