@@ -25,7 +25,7 @@ Route::domain('www.' . config('app.domain'))
 
 Route::domain('get.' . config('app.domain'))
     ->group(function (): void {
-        Route::get('/{presetOrWidth?}', [QuoteController::class, 'get'])->name('createPicture');
+        Route::get('/{presetOrWidth?}/{height?}', [QuoteController::class, 'get'])->name('createPicture');
     })
 ;
 

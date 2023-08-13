@@ -9,14 +9,13 @@ use App\Services\FontPathSelector;
 use App\Services\GetPresetFrom;
 use App\Services\InspirationFont;
 use App\Services\InspirationPicture;
-use Illuminate\Http\Request;
 
 class QuoteController extends Controller
 {
     public const DEFAULT_RESOLUTION_WIDTH = 828;
     public const DEFAULT_RESOLUTION_HEIGHT = 1792;
 
-    public function get(Request $request, ?string $presetOrWitdh)
+    public function get(?string $presetOrWitdh = null, string $height = null)
     {
         // get random font
         $fontPath = (new FontPathSelector())->getOneFont();
@@ -24,7 +23,21 @@ class QuoteController extends Controller
         // get quote
         $text = Quote::getOne();
 
-        $preset = GetPresetFrom::from($presetOrWitdh)->get();
+        $resolutionWidth = self::DEFAULT_RESOLUTION_WIDTH;
+        $resolutionHeight = self::DEFAULT_RESOLUTION_HEIGHT;
+
+        if ($this->areDimensionsValid($presetOrWitdh, $height)) {
+            $resolutionWidth = intval($presetOrWitdh);
+            $resolutionHeight = intval($height);
+        }
+
+        if ($presetOrWitdh !== null) {
+            $preset = GetPresetFrom::from($presetOrWitdh)->get();
+            if ($preset !== null) {
+                $resolutionWidth = $preset->width();
+                $resolutionHeight = $preset->height();
+            }
+        }
 
         // create inspiration picture
         $picture = InspirationPicture::create($resolutionWidth, $resolutionHeight, fake()->hexColor());
@@ -45,31 +58,12 @@ class QuoteController extends Controller
         return $picture->get()->response();
     }
 
-    protected function getResolutionWidth(string $presetOrWitdh): int
+    protected function areDimensionsValid(string $width = null, string $height = null): bool
     {
-        if (is_numeric($presetOrWitdh)) {
-            return intval($presetOrWitdh);
+        if ($width === null || $height === null) {
+            return false;
         }
 
-        $preset = GetPresetFrom::from($presetOrWitdh)->get();
-        if ($preset !== null) {
-            return $preset->width();
-        }
-
-        return self::DEFAULT_RESOLUTION_WIDTH;
-    }
-
-    protected function getResolutionHeight(string $presetOrWitdh): int
-    {
-        if (is_numeric($presetOrWitdh)) {
-            return intval($presetOrWitdh);
-        }
-
-        $preset = GetPresetFrom::from($presetOrWitdh)->get();
-        if ($preset !== null) {
-            return $preset->width();
-        }
-
-        return self::DEFAULT_RESOLUTION_WIDTH;
+        return is_numeric($width) && is_numeric($height) && intval($width) > 0 && intval($height) > 0;
     }
 }

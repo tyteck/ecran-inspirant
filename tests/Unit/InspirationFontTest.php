@@ -8,27 +8,34 @@ use App\Services\FontPathSelector;
 use App\Services\InspirationFont;
 use App\Services\InspirationPicture;
 use Tests\TestCase;
+use Tests\Traits\ImageExpectations;
 
 /**
  * @internal
  */
 class InspirationFontTest extends TestCase
 {
+    use ImageExpectations;
+
     protected string $fontPath;
     protected InspirationPicture $picture;
     protected string $text;
+    protected int $expectedWidth = 828;
+    protected int $expectedHeight = 1792;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->text = 'Vous ne pouvez pas être ce gamin qui reste figé en haut du toboggan en réfléchissant. Vous devez glisser. (Tina Fey)';
-        $this->picture = InspirationPicture::create(828, 1792, fake()->hexColor());
+        $this->picture = InspirationPicture::create($this->expectedWidth, $this->expectedHeight, fake()->hexColor());
         $this->fontPath = (new FontPathSelector())->getOneFont();
     }
 
     /** @test */
     public function no_text(): void
     {
+        $expectedWidth = InspirationPicture::DEFAULT_WIDTH;
+        $expectedHeight = InspirationPicture::DEFAULT_HEIGHT;
         $font = InspirationFont::create(picture: $this->picture, fontPath: $this->fontPath, text: '');
 
         $this->assertNotNull($font);
@@ -37,6 +44,8 @@ class InspirationFontTest extends TestCase
         $this->assertEquals(0, $font->boxHeight());
 
         $font->applyToImage();
+
+        $this->checkImageExpectations($this->picture->get()->getEncoded(), $this->expectedWidth, $this->expectedHeight);
         $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
         $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
     }
@@ -51,6 +60,7 @@ class InspirationFontTest extends TestCase
         $font->applyToImage();
         $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
         $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->checkImageExpectations($this->picture->get()->getEncoded(), $this->expectedWidth, $this->expectedHeight);
     }
 
     /** @test */
@@ -59,6 +69,7 @@ class InspirationFontTest extends TestCase
         InspirationFont::create(picture: $this->picture, fontPath: $this->fontPath, text: $this->text)->applyToImage();
         $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
         $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->checkImageExpectations($this->picture->get()->getEncoded(), $this->expectedWidth, $this->expectedHeight);
     }
 
     /** @test */
@@ -70,6 +81,7 @@ class InspirationFontTest extends TestCase
         ;
         $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
         $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->checkImageExpectations($this->picture->get()->getEncoded(), $this->expectedWidth, $this->expectedHeight);
     }
 
     /** @test */
@@ -81,6 +93,7 @@ class InspirationFontTest extends TestCase
         ;
         $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
         $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->checkImageExpectations($this->picture->get()->getEncoded(), $this->expectedWidth, $this->expectedHeight);
     }
 
     /** @test */
@@ -92,6 +105,7 @@ class InspirationFontTest extends TestCase
         ;
         $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
         $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->checkImageExpectations($this->picture->get()->getEncoded(), $this->expectedWidth, $this->expectedHeight);
     }
 
     /** @test */
@@ -103,6 +117,7 @@ class InspirationFontTest extends TestCase
         ;
         $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
         $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->checkImageExpectations($this->picture->get()->getEncoded(), $this->expectedWidth, $this->expectedHeight);
     }
 
     /** @test */
@@ -114,6 +129,7 @@ class InspirationFontTest extends TestCase
         ;
         $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
         $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->checkImageExpectations($this->picture->get()->getEncoded(), $this->expectedWidth, $this->expectedHeight);
     }
 
     /** @test */
@@ -125,6 +141,7 @@ class InspirationFontTest extends TestCase
         ;
         $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
         $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->checkImageExpectations($this->picture->get()->getEncoded(), $this->expectedWidth, $this->expectedHeight);
     }
 
     /** @test */
@@ -136,6 +153,7 @@ class InspirationFontTest extends TestCase
         ;
         $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
         $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->checkImageExpectations($this->picture->get()->getEncoded(), $this->expectedWidth, $this->expectedHeight);
     }
 
     /** @test */
@@ -147,6 +165,7 @@ class InspirationFontTest extends TestCase
         ;
         $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
         $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->checkImageExpectations($this->picture->get()->getEncoded(), $this->expectedWidth, $this->expectedHeight);
     }
 
     /** @test */
@@ -169,5 +188,6 @@ class InspirationFontTest extends TestCase
 
         $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
         $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->checkImageExpectations($this->picture->get()->getEncoded(), $this->expectedWidth, $this->expectedHeight);
     }
 }

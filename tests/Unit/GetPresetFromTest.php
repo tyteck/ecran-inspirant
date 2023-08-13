@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit;
 
 use App\Enums\IphonePresets;
+use App\Enums\OtherPresets;
 use App\Enums\SamsungPresets;
 use App\Services\GetPresetFrom;
 use Tests\TestCase;
@@ -31,6 +32,21 @@ class GetPresetFromTest extends TestCase
         $this->assertEquals(IphonePresets::IPHONE_8, $result);
         $this->assertEquals('iphone8', $result->value);
         $this->assertEquals('iPhone 8', $result->label());
+    }
+
+    /** @test */
+    public function iphone14_plus_preset_should_return_good_preset(): void
+    {
+        $result = GetPresetFrom::from('iphone14+')->get();
+
+        $this->assertNotNull($result);
+        $this->assertInstanceOf(IphonePresets::class, $result);
+
+        $this->assertEquals(IphonePresets::IPHONE_14_PLUS, $result);
+        $this->assertEquals('iphone14+', $result->value);
+        $this->assertEquals('iPhone 14 Plus', $result->label());
+        $this->assertEquals(1284, $result->width());
+        $this->assertEquals(2778, $result->height());
     }
 
     /**
@@ -70,6 +86,29 @@ class GetPresetFromTest extends TestCase
 
                 $this->assertNotNull($result);
                 $this->assertInstanceOf(SamsungPresets::class, $result);
+            },
+            $presets
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function valid_other_presets_should_return_good_preset(): void
+    {
+        $presets = [
+            'sd',
+            'hd',
+            'fullhd',
+            '4k',
+            '8k',
+        ];
+        array_map(
+            function (string $preset): void {
+                $result = GetPresetFrom::from($preset)->get();
+
+                $this->assertNotNull($result);
+                $this->assertInstanceOf(OtherPresets::class, $result);
             },
             $presets
         );

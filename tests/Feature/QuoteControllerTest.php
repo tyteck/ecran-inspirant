@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
+use App\Http\Controllers\QuoteController;
 use App\Models\Quote;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
+use Tests\Traits\ImageExpectations;
 
 /**
  * @internal
@@ -14,6 +17,9 @@ use Tests\TestCase;
 class QuoteControllerTest extends TestCase
 {
     use RefreshDatabase;
+    use ImageExpectations;
+
+    protected TestResponse $response;
 
     public function setUp(): void
     {
@@ -24,28 +30,80 @@ class QuoteControllerTest extends TestCase
     /** @test */
     public function get_from_route_should_be_accessible(): void
     {
-        $this->get(route('createPicture'))
+        $expectedWidth = QuoteController::DEFAULT_RESOLUTION_WIDTH;
+        $expectedHeight = QuoteController::DEFAULT_RESOLUTION_HEIGHT;
+        $this->response = $this->get(route('createPicture'))
             ->assertSuccessful()
             ->assertHeader('Content-Type', 'image/jpeg')
         ;
+        $this->checkImageExpectations($this->response->content(), $expectedWidth, $expectedHeight);
     }
 
     /** @test */
     public function get_from_url_should_be_accessible(): void
     {
-        $this->get('http://get.' . config('app.domain'))
+        $expectedWidth = QuoteController::DEFAULT_RESOLUTION_WIDTH;
+        $expectedHeight = QuoteController::DEFAULT_RESOLUTION_HEIGHT;
+        $this->response = $this->get('http://get.' . config('app.domain'))
             ->assertSuccessful()
             ->assertHeader('Content-Type', 'image/jpeg')
         ;
+
+        $this->checkImageExpectations($this->response->content(), $expectedWidth, $expectedHeight);
     }
 
     /** @test */
-    public function get_should_accept_presets(): void
+    public function get_specific_width_and_height_from_url_should_be_accessible(): void
     {
-        $route = route('createPicture', ['presetOrWidth' => 'iphone8']);
-        $this->get($route)
+        $expectedWidth = 300;
+        $expectedHeight = 300;
+        $this->response = $this->get('http://get.' . config('app.domain') . "/{$expectedWidth}/{$expectedHeight}")
             ->assertSuccessful()
             ->assertHeader('Content-Type', 'image/jpeg')
         ;
+
+        $this->checkImageExpectations($this->response->content(), $expectedWidth, $expectedHeight);
+    }
+
+    /**
+     * @test
+     *
+     * @dataProvider providePresets
+     */
+    public function get_should_accept_presets(string $presetName, int $expectedWidth, int $expectedHeight): void
+    {
+        $this->response = $this->get('http://get.' . config('app.domain') . "/{$presetName}")
+            ->assertSuccessful()
+            ->assertHeader('Content-Type', 'image/jpeg')
+        ;
+        $this->checkImageExpectations($this->response->content(), $expectedWidth, $expectedHeight);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | helpers & providers
+    |--------------------------------------------------------------------------
+    */
+    public static function providePresets(): array
+    {
+        return [
+            'iPhone 14+' => ['iphone14+', 1284, 2778],
+            'iPhone 13' => ['iphone13', 1170, 2532],
+            'iPhone 13 mini' => ['iphone13mini', 1080, 2340],
+            'iPhone 12 Pro Max' => ['iphone12promax', 1284, 2778],
+            'iPhone 11 Pro Max' => ['iphone11promax', 1242, 2688],
+            'iPhone 11' => ['iphone11', 828, 1792],
+            'iPhone XS' => ['iphonexs', 1125, 2436],
+            'iPhone X' => ['iphonex', 1125, 2436],
+            'iPhone 8 Plus' => ['iphone8+', 1080, 1920],
+            'iPhone 8' => ['iphone8', 750, 1334],
+            'iPhone 7' => ['iphone7', 750, 1334],
+            'iPhone 5C' => ['iphone5c', 640, 1136],
+            'iPhone 5S' => ['iphone5s', 640, 1136],
+            'iPhone 5' => ['iphone5', 640, 1136],
+            'iPhone SE 1st gen' => ['iphonese1', 640, 1136],
+
+            'Samsung Galaxy 8' => ['galaxy8', 640, 960],
+        ];
     }
 }
