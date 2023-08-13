@@ -64,6 +64,7 @@ class QuotesTableSeeder extends Seeder
             ['text' => 'Ne vis pas pour que ta présence se remarque, mais pour que ton absence se ressente.', 'source' => 'Bob Marley'],
             ['text' => 'Je pense, donc je suis.', 'source' => 'René Descartes'],
             ['text' => 'Mieux vaux fait que parfait.', 'source' => 'Sheryl Sandberg'],
+            ['text' => "Le mieux est l'ennemi du bien.", 'source' => 'Voltaire'],
         ];
 
         $index = 1;
