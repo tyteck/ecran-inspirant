@@ -3,6 +3,9 @@
 @section('pageTitle', $pageTitle)
 
 @section('content')
+
+    <x-navigation :color="$color" activeRoute="index" />
+
     <div class="md:hidden bg-{{ $color }}-900 rounded-lg p-2">
         <!-- small version -->
         <h1 class="text-2xl font-semibold">{{ $pageTitle }}</h1>

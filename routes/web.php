@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\HelpController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\QuoteController;
 use Illuminate\Support\Facades\Route;
@@ -17,12 +18,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::domain('www.' . config('app.domain'))
-    ->group(function (): void {
-        Route::get('/', [HomeController::class, 'show'])->name('www.index');
-    })
-;
-
 Route::domain('get.' . config('app.domain'))
     ->group(function (): void {
         Route::get('/{presetOrWidth?}/{height?}', [QuoteController::class, 'get'])->name('createPicture');
@@ -30,3 +25,4 @@ Route::domain('get.' . config('app.domain'))
 ;
 
 Route::get('/', [HomeController::class, 'show'])->name('index');
+Route::get('/aide', [HelpController::class, 'show'])->name('help');

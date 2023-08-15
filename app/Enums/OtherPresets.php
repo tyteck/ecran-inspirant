@@ -48,11 +48,11 @@ enum OtherPresets: string implements Resolution
     public function label(): string
     {
         return match ($this) {
-            self::SD => 'SD, définition standard, qualité DVD',
-            self::HD => 'HDTV, HD 720p, 720p, HD Ready',
-            self::FULL_HD => 'HDTV 1080p, HD 1080p, 1080p, Full HD',
-            self::FOUR_K => '4K, UHD 4K, Ultra HD 4K, UHD-4K, 2160p',
-            self::EIGHT_K => '8K, UHD 8K, Ultra HD 8K, UHD-8K, 4320p',
+            self::SD => 'TV Standard (480p)',
+            self::HD => 'HD ready 720p',
+            self::FULL_HD => 'Full HD 1080p',
+            self::FOUR_K => '4K, Ultra HD 4K 2160p',
+            self::EIGHT_K => '8K, Ultra HD 8K, 4320p',
         };
     }
 }

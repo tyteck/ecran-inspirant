@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Enums\Colors;
+use App\Http\Controllers\Traits\Color;
 use App\Services\CreateImage;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 
 class HomeController extends Controller
 {
+    use Color;
+
     protected array $emotes = ['🤔', '😌', '😎', '😊'];
-    // ces couleurs sont celles de tailwind
-    // et elles doivent egalement se retrouver dans
-    // le fichier tailwind.config.js
-    protected array $colors = ['gray', 'orange', 'red', 'green', 'blue', 'purple', 'pink', 'emerald', 'rose'];
 
     public function show(): View|Factory
     {
@@ -24,7 +22,7 @@ class HomeController extends Controller
             Ecran-inpirant est là pour ca et en plus c'est gratuit.";
         $emote = $this->emotes[array_rand($this->emotes)];
 
-        $color = Colors::random();
+        $color = $this->randomColor();
 
         $width = 400;
         $height = intval(round($width * 1.77777, 0)); // linkedin vertical image ratio

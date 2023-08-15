@@ -22,7 +22,8 @@
         <li><strong>sous mac</strong> : (bientôt)</li>
         <li><strong>sous linux</strong> : (bientôt)</li>
 
-        <li>custom : Rends toi sur <a href="https://get.ecran-inspirant.fr">get.ecran-inspirant.fr</a> et
+        <li>custom : Rends toi sur <a href="https://get.ecran-inspirant.fr"
+                class="hover:underline">get.ecran-inspirant.fr</a> et
             rafraichis la page jusqu'a obtenir la citation que tu souhaites. <br />
             <i>Les options de personnalisation arrivent</i>.
         </li>

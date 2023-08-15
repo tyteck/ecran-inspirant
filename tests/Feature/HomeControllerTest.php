@@ -37,15 +37,10 @@ class HomeControllerTest extends TestCase
                 'meta property="og:image:width"',
                 'meta property="og:image:height"',
                 'meta name="csrf-token"',
+                '<strong>Le principe :</strong>',
+                '<strong>Comment faire ?</strong>',
+                '<img class="rounded-lg mx-auto" src="/images/welcome.jpg">',
             ], escape: false)
-        ;
-    }
-
-    /** @test */
-    public function www_home_should_be_accessible(): void
-    {
-        $this->get(route('www.index'))
-            ->assertSuccessful()
         ;
     }
 }
