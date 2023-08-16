@@ -134,7 +134,7 @@ class InspirationFont
     {
         $this->positionX = 0;
         $this->positionY = (int) round($this->picture->height() - $this->imagickFont->getBoxSize()['height']);
-        $this->imagickFont->valign('top')
+        $this->imagickFont->valign('bottom')
             ->align('left')
         ;
 
@@ -145,7 +145,7 @@ class InspirationFont
     {
         $this->positionX = $this->imageCenter();
         $this->positionY = $this->picture->height() - $this->imagickFont->getBoxSize()['height'];
-        $this->imagickFont->valign('top')
+        $this->imagickFont->valign('bottom')
             ->align('center')
         ;
 

@@ -12,10 +12,33 @@ use App\Services\InspirationPicture;
 
 class QuoteController extends Controller
 {
-    public const DEFAULT_RESOLUTION_WIDTH = 828;
-    public const DEFAULT_RESOLUTION_HEIGHT = 1792;
+    public const DEFAULT_PRESET = 'iphone11';
+    public const SMALLEST_PRESET = 'sd';
+    public const BIGGEST_PRESET = '8k';
 
-    public function get(?string $presetOrWitdh = null, string $height = null)
+    protected int $defaultWidth;
+    protected int $smallestWidth;
+    protected int $biggestWidth;
+    protected int $defaultHeight;
+    protected int $smallestHeight;
+    protected int $biggestHeight;
+
+    public function __construct()
+    {
+        $preset = GetPresetFrom::from(self::DEFAULT_PRESET)->get();
+        $this->defaultWidth = $preset->width();
+        $this->defaultHeight = $preset->height();
+
+        $smallestPreset = GetPresetFrom::from(self::SMALLEST_PRESET)->get();
+        $this->smallestWidth = $smallestPreset->width();
+        $this->smallestHeight = $smallestPreset->height();
+
+        $biggestPreset = GetPresetFrom::from(self::BIGGEST_PRESET)->get();
+        $this->biggestWidth = $biggestPreset->width();
+        $this->biggestHeight = $biggestPreset->height();
+    }
+
+    public function get(?string $presetOrWidth = null, string $height = null)
     {
         // get random font
         $fontPath = (new FontPathSelector())->getOneFont();
@@ -23,16 +46,21 @@ class QuoteController extends Controller
         // get quote
         $text = Quote::getOne();
 
-        $resolutionWidth = self::DEFAULT_RESOLUTION_WIDTH;
-        $resolutionHeight = self::DEFAULT_RESOLUTION_HEIGHT;
+        // setting default dimensions
+        $resolutionWidth = $this->defaultWidth;
+        $resolutionHeight = $this->defaultHeight;
 
-        if ($this->areDimensionsValid($presetOrWitdh, $height)) {
-            $resolutionWidth = intval($presetOrWitdh);
+        // if preset or width
+        if (is_numeric($presetOrWidth) && $this->checkWidth($presetOrWidth)) {
+            $resolutionWidth = intval($presetOrWidth);
+        }
+
+        if (is_numeric($height) && $this->checkHeight($height)) {
             $resolutionHeight = intval($height);
         }
 
-        if ($presetOrWitdh !== null) {
-            $preset = GetPresetFrom::from($presetOrWitdh)->get();
+        if ($presetOrWidth !== null) {
+            $preset = GetPresetFrom::from($presetOrWidth)->get();
             if ($preset !== null) {
                 $resolutionWidth = $preset->width();
                 $resolutionHeight = $preset->height();
@@ -58,12 +86,13 @@ class QuoteController extends Controller
         return $picture->get()->response();
     }
 
-    protected function areDimensionsValid(string $width = null, string $height = null): bool
+    protected function checkWidth(string $presetOrWidth): bool
     {
-        if ($width === null || $height === null) {
-            return false;
-        }
+        return $this->smallestWidth <= intval($presetOrWidth) && intval($presetOrWidth) <= $this->biggestWidth;
+    }
 
-        return is_numeric($width) && is_numeric($height) && intval($width) > 0 && intval($height) > 0;
+    protected function checkHeight(string $height): bool
+    {
+        return $this->smallestHeight <= intval($height) && intval($height) <= $this->biggestHeight;
     }
 }

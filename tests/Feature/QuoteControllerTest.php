@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
-use App\Http\Controllers\QuoteController;
 use App\Models\Quote;
+use App\Services\GetPresetFrom;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
@@ -20,49 +20,61 @@ class QuoteControllerTest extends TestCase
     use ImageExpectations;
 
     protected TestResponse $response;
+    protected int $defaultWidth;
+    protected int $defaultHeight;
 
     public function setUp(): void
     {
         parent::setUp();
         Quote::factory()->create(['text' => 'Je pense, donc je suis.', 'source' => 'René Descartes']);
+
+        $preset = GetPresetFrom::from('iphone11')->get();
+        $this->defaultWidth = $preset->width();
+        $this->defaultHeight = $preset->height();
     }
 
     /** @test */
     public function get_from_route_should_be_accessible(): void
     {
-        $expectedWidth = QuoteController::DEFAULT_RESOLUTION_WIDTH;
-        $expectedHeight = QuoteController::DEFAULT_RESOLUTION_HEIGHT;
         $this->response = $this->get(route('createPicture'))
             ->assertSuccessful()
             ->assertHeader('Content-Type', 'image/jpeg')
         ;
-        $this->checkImageExpectations($this->response->content(), $expectedWidth, $expectedHeight);
+        $this->checkImageExpectations($this->response->content(), $this->defaultWidth, $this->defaultHeight);
     }
 
     /** @test */
     public function get_from_url_should_be_accessible(): void
     {
-        $expectedWidth = QuoteController::DEFAULT_RESOLUTION_WIDTH;
-        $expectedHeight = QuoteController::DEFAULT_RESOLUTION_HEIGHT;
         $this->response = $this->get('http://get.' . config('app.domain'))
             ->assertSuccessful()
             ->assertHeader('Content-Type', 'image/jpeg')
         ;
 
-        $this->checkImageExpectations($this->response->content(), $expectedWidth, $expectedHeight);
+        $this->checkImageExpectations($this->response->content(), $this->defaultWidth, $this->defaultHeight);
     }
 
     /** @test */
     public function get_specific_width_and_height_from_url_should_be_accessible(): void
     {
-        $expectedWidth = 300;
-        $expectedHeight = 300;
-        $this->response = $this->get('http://get.' . config('app.domain') . "/{$expectedWidth}/{$expectedHeight}")
+        $this->response = $this->get('http://get.' . config('app.domain') . '/300/300')
             ->assertSuccessful()
             ->assertHeader('Content-Type', 'image/jpeg')
         ;
 
-        $this->checkImageExpectations($this->response->content(), $expectedWidth, $expectedHeight);
+        $this->checkImageExpectations($this->response->content(), $this->defaultWidth, $this->defaultHeight);
+    }
+
+    /** @test */
+    public function get_invalid_dimension_should_get_minimal(): void
+    {
+        $expectedHeight = 1000;
+        $this->response = $this->get('http://get.' . config('app.domain') . "/10/{$expectedHeight}")
+            ->assertSuccessful()
+            ->assertHeader('Content-Type', 'image/jpeg')
+        ;
+
+        $this->checkImageExpectations($this->response->content(), $this->defaultWidth, $expectedHeight);
     }
 
     /**

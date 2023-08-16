@@ -5,7 +5,7 @@
         </span>
         <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-{{ $color }}-50 sm:mt-0">
             <li>
-                <a href="https://www.tyteca.net" tagert="_blank" class="mr-4 hover:underline md:mr-6 ">A propos</a>
+                <a href="https://www.tyteca.net" target="_blank" class="mr-4 hover:underline md:mr-6 ">A propos</a>
             </li>
             <li>
                 <a href="#" class="hover:underline">frederick@tyteca.net</a>

@@ -4,8 +4,44 @@
 
 @section('content')
     <div x-data="{
-        preset: '',
-        getUrl: 'https://get.ecran-inspirant.fr/',
+        baseUrl: '{{ route('createPicture') }}/',
+        urlToDisplay: '{{ route('createPicture') }}/',
+        get displayUrl() {
+            return this.urlToDisplay
+        },
+        imageWidth: 0,
+        imageHeight: 0,
+        imagePreset: null,
+        setHeight(event) {
+            this.imageHeight = event.target.value
+            this.refreshUrl()
+    
+        },
+        setWidth(event) {
+            this.imageWidth = event.target.value
+            this.refreshUrl()
+        },
+        setPreset(event) {
+            this.imagePreset = event.target.value
+            this.imageWidth = null
+            this.imageHeight = null
+            this.refreshUrl()
+        },
+        refreshUrl() {
+            if (this.isValid(this.imageWidth) && this.isValid(this.imageHeight)) {
+                this.urlToDisplay = this.baseUrl + this.imageWidth + '/' + this.imageHeight
+                return true;
+            }
+    
+            if (preset) {
+                this.urlToDisplay = this.baseUrl + this.imagePreset
+            }
+        },
+        isValid(num) {
+            console.log('isValid : ' + num)
+            if (typeof num != 'string') return false
+            return !isNaN(num) && !isNaN(parseFloat(num) && num > 299)
+        }
     }">
         <x-navigation :color="$color" activeRoute="help" />
 
