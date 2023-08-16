@@ -14,21 +14,21 @@
         <div class="mt-2">
             <label class="block text-sm font-medium leading-6">Ou bien directement la résolution de ton
                 écran</label>
+            <small class="block sm:inline">Taille minimale 720x420.</small>
+            <small class="block sm:inline">Taille maximale 8k</small>
             <div class="flex items-center max-w-screen-xl mx-auto">
                 <div class="relative mt-2 sm:mr-2 rounded-md shadow-sm">
                     <label for="width" class="block text-sm font-medium leading-6">Largeur</label>
                     <input type="text" name="width" id="width" x-on:change.debounce="setWidth($event)"
                         class="block w-full rounded-md border-0 pl-2 py-1.5 pr-10 bg-{{ $color }}-800 ring-{{ $color }}-300 ring-1 ring-inset placeholder:text-{{ $color }}-100 focus:ring-2 focus:ring-inset focus:ring-{{ $color }}-600 sm:text-sm sm:leading-6"
                         placeholder="1920" aria-invalid="true" x-model="imageWidth" aria-describedby="image width">
-                    <small>la largeur doit être supérieure à 300</small>
+
                 </div>
                 <div class="relative mt-2 rounded-md shadow-sm">
                     <label for="height" class="block text-sm font-medium leading-6">Hauteur</label>
                     <input type="text" name="width" id="height" x-on:change.debounce="setHeight($event)"
                         class="block w-full rounded-md border-0 pl-2 py-1.5 pr-10 bg-{{ $color }}-800 ring-{{ $color }}-300 ring-1 ring-inset placeholder:text-{{ $color }}-100 focus:ring-2 focus:ring-inset focus:ring-{{ $color }}-600 sm:text-sm sm:leading-6"
                         placeholder="1920" aria-invalid="true" x-model="imageHeight" aria-describedby="image height">
-                    <small>la hauteur doit être supérieure à 300</small>
-
                 </div>
             </div>
         </div>

@@ -9,8 +9,8 @@
         get displayUrl() {
             return this.urlToDisplay
         },
-        imageWidth: 0,
-        imageHeight: 0,
+        imageWidth: null,
+        imageHeight: null,
         imagePreset: null,
         setHeight(event) {
             this.imageHeight = event.target.value
