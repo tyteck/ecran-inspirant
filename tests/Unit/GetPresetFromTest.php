@@ -102,6 +102,7 @@ class GetPresetFromTest extends TestCase
             'fullhd',
             '4k',
             '8k',
+            'linkedin',
         ];
         array_map(
             function (string $preset): void {

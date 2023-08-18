@@ -18,6 +18,8 @@ enum OtherPresets: string implements Resolution
 
     case EIGHT_K = '8k';
 
+    case LINKEDIN = 'linkedin';
+
     public static function values(): array
     {
         return array_column(self::cases(), 'value');
@@ -31,6 +33,7 @@ enum OtherPresets: string implements Resolution
             self::FULL_HD => 1920,
             self::FOUR_K => 3840,
             self::EIGHT_K => 7680,
+            self::LINKEDIN => 1080,
         };
     }
 
@@ -42,6 +45,7 @@ enum OtherPresets: string implements Resolution
             self::FULL_HD => 1080,
             self::FOUR_K => 2160,
             self::EIGHT_K => 4320,
+            self::LINKEDIN => 540,
         };
     }
 
@@ -53,6 +57,7 @@ enum OtherPresets: string implements Resolution
             self::FULL_HD => 'Full HD 1080p',
             self::FOUR_K => '4K, Ultra HD 4K 2160p',
             self::EIGHT_K => '8K, Ultra HD 8K, 4320p',
+            self::LINKEDIN => 'LinkedIn',
         };
     }
 }

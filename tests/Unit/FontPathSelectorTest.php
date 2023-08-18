@@ -45,7 +45,6 @@ class FontPathSelectorTest extends TestCase
             fn ($fontFile) => '/app/resources/fonts/' . $fontFile,
             Storage::disk('fonts')->files()
         );
-
         $result = $this->fontPathSelector->getOneFont();
 
         $this->assertNotNull($result);

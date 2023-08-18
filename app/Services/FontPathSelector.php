@@ -28,6 +28,7 @@ class FontPathSelector
 
     public function getOneFont(): string
     {
+        
         return $this->getPath($this->availableFonts[array_rand($this->availableFonts)]);
     }
 }
