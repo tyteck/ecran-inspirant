@@ -15,6 +15,7 @@ class QuoteController extends Controller
     public const DEFAULT_PRESET = 'iphone11';
     public const SMALLEST_PRESET = 'sd';
     public const BIGGEST_PRESET = '8k';
+    public const WATERMARK_TEXT_SIZE = 48;
 
     protected int $defaultWidth;
     protected int $smallestWidth;
@@ -71,13 +72,17 @@ class QuoteController extends Controller
         $picture = InspirationPicture::create($resolutionWidth, $resolutionHeight, fake()->hexColor());
 
         // add text
-        InspirationFont::create(picture: $picture, fontPath: $fontPath, text: $text)
+        $mainText = InspirationFont::create(picture: $picture, fontPath: $fontPath, text: $text)
             ->alignMiddleCenter()
             ->applyToImage()
         ;
 
+        $watermarkTextSize = self::WATERMARK_TEXT_SIZE;
+        if ($watermarkTextSize > $mainText->textSize()) {
+            $watermarkTextSize = $mainText->textSize() - 8;
+        }
         // add Watermark
-        InspirationFont::create(picture: $picture, fontPath: $fontPath, text: config('app.domain'), textSize: 48)
+        InspirationFont::create(picture: $picture, fontPath: $fontPath, text: config('app.domain'), textSize: $watermarkTextSize)
             ->alignBottomRight()
             ->applyToImage()
         ;

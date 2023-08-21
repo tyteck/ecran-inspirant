@@ -34,16 +34,14 @@ class InspirationFontTest extends TestCase
     /** @test */
     public function no_text(): void
     {
-        $expectedWidth = InspirationPicture::DEFAULT_WIDTH;
-        $expectedHeight = InspirationPicture::DEFAULT_HEIGHT;
-        $font = InspirationFont::create(picture: $this->picture, fontPath: $this->fontPath, text: '');
+        $font = InspirationFont::create(picture: $this->picture, fontPath: $this->fontPath, text: '')
+            ->applyToImage()
+        ;
 
         $this->assertNotNull($font);
         $this->assertInstanceOf(InspirationFont::class, $font);
         $this->assertEquals(0, $font->boxWidth());
         $this->assertEquals(0, $font->boxHeight());
-
-        $font->applyToImage();
 
         $this->checkImageExpectations($this->picture->get()->getEncoded(), $this->expectedWidth, $this->expectedHeight);
         $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
@@ -189,5 +187,45 @@ class InspirationFontTest extends TestCase
         $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
         $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
         $this->checkImageExpectations($this->picture->get()->getEncoded(), $this->expectedWidth, $this->expectedHeight);
+    }
+
+    /** @test */
+    public function align_middle_center_landscape(): void
+    {
+        $expectedWidth = 1080;
+        $expectedHeight = 540;
+        $this->picture = InspirationPicture::create($expectedWidth, $expectedHeight, fake()->hexColor());
+
+        $this->fontPath = (new FontPathSelector())->getPath('Nunito-Regular.ttf');
+
+        InspirationFont::create(picture: $this->picture, fontPath: $this->fontPath, text: $this->text)
+            ->alignMiddleCenter()
+            ->applyToImage()
+        ;
+        $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->checkImageExpectations($this->picture->get()->getEncoded(), $expectedWidth, $expectedHeight);
+    }
+
+    /** @test */
+    public function usable_height_is_fine(): void
+    {
+        // portrait image
+        $result = InspirationFont::create(picture: $this->picture, fontPath: $this->fontPath, text: $this->text)
+            ->useableHeight()
+        ;
+        $expectedResult = floor($this->expectedHeight * 0.9);
+        $this->assertEquals($expectedResult, $result);
+
+        // landscape image
+        $expectedHeight = 540;
+        $this->picture = InspirationPicture::create(1080, $expectedHeight, fake()->hexColor());
+
+        $result = InspirationFont::create(picture: $this->picture, fontPath: $this->fontPath, text: $this->text)
+            ->useableHeight()
+        ;
+
+        $expectedResult = floor($expectedHeight * 0.8);
+        $this->assertEquals($expectedResult, $result);
     }
 }

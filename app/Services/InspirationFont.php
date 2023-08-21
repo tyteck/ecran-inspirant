@@ -18,6 +18,7 @@ class InspirationFont
     protected int $iterations = 0;
     protected int $positionX;
     protected int $positionY;
+    protected bool $isLandscape = false;
 
     private function __construct(
         protected InspirationPicture $picture,
@@ -31,6 +32,9 @@ class InspirationFont
             ->color($this->textColor)
             ->size($this->textSize)
         ;
+        if ($this->picture->width() > $this->picture->height()) {
+            $this->isLandscape = true;
+        }
 
         $this->prepareText();
 
@@ -67,6 +71,11 @@ class InspirationFont
         );
 
         return $this;
+    }
+
+    public function textSize(): int
+    {
+        return $this->textSize;
     }
 
     public function boxWidth(): int
@@ -154,7 +163,7 @@ class InspirationFont
 
     public function alignBottomRight(): self
     {
-        $this->positionX = $this->picture->width();
+        $this->positionX = $this->picture->width() - 15;
         $this->positionY = (int) round($this->picture->height() - $this->imagickFont->getBoxSize()['height']);
         $this->imagickFont->valign('top')
             ->align('right')
@@ -215,9 +224,11 @@ class InspirationFont
         return $this;
     } */
 
-    public function applyToImage(): void
+    public function applyToImage(): self
     {
         $this->imagickFont->applyToImage($this->picture->get(), $this->positionX, $this->positionY);
+
+        return $this;
     }
 
     public function checkFontExists(): void
@@ -231,6 +242,15 @@ class InspirationFont
     public function fontPath(): string
     {
         return public_path('fonts/' . $this->fontPath);
+    }
+
+    public function useableHeight(): int
+    {
+        if ($this->isLandscape) {
+            return intval(floor($this->picture->height() * 0.80));
+        }
+
+        return intval(floor($this->picture->height() * 0.90));
     }
 
     /*
@@ -288,10 +308,13 @@ class InspirationFont
 
     protected function doesTextFit(): bool
     {
+        if (strlen($this->text) <= 0) {
+            return true;
+        }
         $this->boxSize = $this->imagickFont->getBoxSize();
         if (
             $this->boxSize['width'] < $this->picture->width()
-            && $this->boxSize['height'] < $this->picture->height()
+            && $this->boxSize['height'] < $this->useableHeight()
         ) {
             return true;
         }
