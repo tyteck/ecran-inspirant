@@ -25,6 +25,7 @@ class QuotesTableSeeder extends Seeder
          */
         $data = [
             ['text' => 'Vis comme si tu devais mourir demain, apprends comme si tu devais vivre toujours.', 'source' => 'Gandhi'],
+            ['text' => "La vie est un mystère qu'il faut vivre, et non un problème à résoudre.", 'source' => 'Gandhi'],
             ['text' => "Le succès n'est pas final, l'échec n'est pas fatal. C'est le courage de continuer qui compte.", 'source' => 'Winston Churchill'],
             ['text' => "Tout est possible à qui rêve, ose, travaille et n'abandonne jamais.", 'source' => 'Xavier Dolan'],
             ['text' => "La seule limite à notre épanouissement de demain, sera nos doutes d'aujourd'hui.", 'source' => 'Franklin Delano Roosevelt'],
@@ -33,6 +34,7 @@ class QuotesTableSeeder extends Seeder
             ['text' => 'Vous ne pouvez pas être ce gamin, celui qui reste figé en haut du toboggan en réfléchissant. Vous devez glisser.', 'source' => 'Tina Fey'],
             ['text' => "J'ai appris, il y a longtemps, qu'il y a quelque chose de pire que de rater l'objectif : ne pas passer à l'action.", 'source' => 'Mia Hamm'],
             ['text' => "Un jour, tu te réveilleras, et tu n'auras plus le temps de faire ce que tu voulais faire. Fais-le donc maintenant.", 'source' => 'Paulo Coelho'],
+            ['text' => "Quand on ne peut revenir en arrière, on ne doit se préoccuper que de la meilleure façon d'aller de l'avant.", 'source' => 'Paulo Coelho'],
             ['text' => "En suivant le chemin qui s'appelle plus tard, nous arrivons sur la place qui s'appelle jamais.", 'source' => 'Sénèque'],
             ['text' => "Plus tard, il sera trop tard. Notre vie, c'est maintenant.", 'source' => 'Jacques Prévert'],
             ['text' => "Dans 20 ans, tu seras plus déçu par les choses que tu n'as pas faites, que par celles que tu auras faites. Alors, sors des sentiers battus. Mets les voiles. Explore. Rêve. Découvre.", 'source' => 'Mark Twain'],
@@ -48,6 +50,9 @@ class QuotesTableSeeder extends Seeder
             ['text' => "Le succès n'est pas final. L'echec n'est pas fatal. C'est le courage de continuer qui compte.", 'source' => 'Winston Churchill'],
             ['text' => 'Vis comme si tu devais mourir demain. Apprends comme si tu devais vivre toujours.', 'source' => 'Gandhi'],
             ['text' => "La vie, c'est comme une bicyclette, il faut avancer pour ne pas perdre l'équilibre.", 'source' => 'Albert Einstein'],
+            ['text' => 'Un problème sans solution est un problème mal posé.', 'source' => 'Albert Einstein'],
+            ['text' => 'Si vous voulez vivre une vie heureuse, attachez-la à un but, non pas à des personnes ou des choses.', 'source' => 'Albert Einstein'],
+            ['text' => 'Le monde ne sera pas détruit par ceux qui font le mal, mais par ceux qui les regardent sans rien faire.', 'source' => 'Albert Einstein'],
             ['text' => "Exige beaucoup de toi-même et attends peu des autres. Ainsi beaucoup d'ennuis te seront épargnés.", 'source' => 'Confucius'],
             ['text' => "Un sourire coûte moins cher que l'électricité, mais donne autant de lumière.", 'source' => 'Abbé Pierre'],
             ['text' => "J'parle pas aux cons, ça les instruit.", 'source' => 'Michel Audiard'],
@@ -55,7 +60,6 @@ class QuotesTableSeeder extends Seeder
             ['text' => 'Quand on veut on peut, quand on peut on doit.', 'source' => 'Napoléon Bonaparte'],
             ['text' => 'Celui qui accepte le mal sans lutter contre lui coopère avec lui.', 'source' => 'Martin Luther King'],
             ['text' => "Un gagnant est un rêveur qui n'abandonne jamais.", 'source' => 'Nelson Mandela'],
-            ['text' => 'Un problème sans solution est un problème mal posé.', 'source' => 'Albert Einstein'],
             ['text' => "Agissez comme s'il était impossible d'échouer.", 'source' => 'Winston Churchill'],
             ['text' => "La vraie richesse d'un homme, en ce monde, se mesure au bien qu'il a fait autour de lui.", 'source' => 'Mahomet'],
             ['text' => "Ils ne savaient pas que c'était impossible, alors ils l'ont fait.", 'source' => 'Mark Twain'],
@@ -65,6 +69,14 @@ class QuotesTableSeeder extends Seeder
             ['text' => 'Je pense, donc je suis.', 'source' => 'René Descartes'],
             ['text' => 'Mieux vaux fait que parfait.', 'source' => 'Sheryl Sandberg'],
             ['text' => "Le mieux est l'ennemi du bien.", 'source' => 'Voltaire'],
+            ['text' => "Fais de ta vie un rêve, et d'un rêve, une réalité.", 'source' => 'Antoine de Saint-Exupéry'],
+            ['text' => 'La vie est un défi à relever, un bonheur à mériter, une aventure à tenter.', 'source' => 'Mère Teresa'],
+            ['text' => "Les jaloux détruisent ce qu'ils sont incapables de créer.", 'source' => 'Paul Guth'],
+            ['text' => "L'ignorant affirme, le savant doute, le sage réfléchit.", 'source' => 'Aristote'],
+            ['text' => 'Sourire mobilise 15 muscles, mais faire la gueule en sollicite 40. Reposez-vous : souriez !', 'source' => 'Christophe André'],
+            ['text' => 'Mesdames, un conseil. Si vous cherchez un homme beau, riche et intelligent... prenez-en trois !', 'source' => 'Coluche'],
+            ['text' => 'Le succès de chaque femme devrait être une source inspiration pour une autre. Nous devons nous élever les unes les autres. Soyez très courageuses : soyez fortes, avec beaucoup de bonté, et surtout soyez humbles.', 'source' => 'Coluche'],
+
         ];
 
         $index = 1;
