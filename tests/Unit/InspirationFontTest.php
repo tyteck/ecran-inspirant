@@ -208,6 +208,25 @@ class InspirationFontTest extends TestCase
     }
 
     /** @test */
+    public function linkedin(): void
+    {
+        $expectedWidth = 1080;
+        $expectedHeight = 540;
+        $this->picture = InspirationPicture::create($expectedWidth, $expectedHeight, fake()->hexColor());
+
+        $this->fontPath = (new FontPathSelector())->getOneFont();
+        $this->text = "Les tests, c'est la sérénité !";
+
+        InspirationFont::create(picture: $this->picture, fontPath: $this->fontPath, text: $this->text)
+            ->alignMiddleCenter()
+            ->applyToImage()
+        ;
+        $this->picture->save(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->assertFileExists(storage_path('tests/' . __FUNCTION__ . '.jpg'));
+        $this->checkImageExpectations($this->picture->get()->getEncoded(), $expectedWidth, $expectedHeight);
+    }
+
+    /** @test */
     public function usable_height_is_fine(): void
     {
         // portrait image
