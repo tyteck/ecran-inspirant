@@ -78,7 +78,7 @@ class QuotesTableSeeder extends Seeder
             ["L'ignorant affirme, le savant doute, le sage réfléchit.", 'Aristote'],
             ['Sourire mobilise 15 muscles, mais faire la gueule en sollicite 40. Reposez-vous : souriez !', 'Christophe André'],
             ['Mesdames, un conseil. Si vous cherchez un homme beau, riche et intelligent... prenez-en trois !', 'Coluche'],
-            ['Le succès de chaque femme devrait être une source inspiration pour une autre. Nous devons nous élever les unes les autres. Soyez très courageuses : soyez fortes, avec beaucoup de bonté, et surtout soyez humbles.', 'Coluche'],
+            ['Le succès de chaque femme devrait être une source inspiration pour une autre. Nous devons nous élever les unes les autres. Soyez très courageuses : soyez fortes, avec beaucoup de bonté, et surtout soyez humbles.', 'Serena Williams'],
             ['Je me trompe, donc je suis.', 'Xavier Tartakover'],
             ['Il n’y a jamais d’échec, il n’y a que des expériences.', 'Michaels Claeys'],
             ["Apprendre de ses erreurs c'est avancer à grands pas.", 'Sharins'],
