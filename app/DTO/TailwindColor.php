@@ -51,8 +51,25 @@ class TailwindColor
         return $this->index_900;
     }
 
+    public function inter(): string
+    {
+        return $this->index_400;
+    }
+
     public function name(): string
     {
         return $this->colorName;
+    }
+
+    public function byIndex(string|int $index): string
+    {
+        $prop = "index_{$index}";
+
+        throw_unless(
+            property_exists($this, $prop),
+            new TailwindColorIndexNotDefinedException("This property {$prop} do not exists.")
+        );
+
+        return $this->{$prop};
     }
 }

@@ -26,7 +26,7 @@ class InspirationFontTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->text = 'Vous ne pouvez pas être ce gamin qui reste figé en haut du toboggan en réfléchissant. Vous devez glisser. (Tina Fey)';
+        $this->text = "Vous ne pouvez pas être ce gamin qui\treste figé en haut du toboggan en réfléchissant. Vous devez glisser. (Tina Fey)";
         $this->picture = InspirationPicture::create($this->expectedWidth, $this->expectedHeight, fake()->hexColor());
         $this->fontPath = (new FontPathSelector())->getOneFont();
     }

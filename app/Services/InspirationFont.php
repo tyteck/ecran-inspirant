@@ -45,9 +45,14 @@ class InspirationFont
         $this->boxSize = $this->imagickFont->getBoxSize();
     }
 
-    public static function create(...$params)
-    {
-        return new static(...$params);
+    public static function create(
+        InspirationPicture $picture,
+        string $fontPath,
+        string $text = '',
+        int $textSize = self::DEFAULT_TEXT_SIZE,
+        ?string $textColor = null,
+    ) {
+        return new static($picture, $fontPath, $text, $textSize,  $textColor);
     }
 
     public function availableWidth(): int
@@ -66,9 +71,10 @@ class InspirationFont
 
     protected function setTextColor(): self
     {
-        $this->imagickFont->color(
-            getContrastColor($this->picture->backgroundColor())
-        );
+        if ($this->textColor === null) {
+            $this->textColor = getContrastColor($this->picture->backgroundColor());
+        }
+        $this->imagickFont->color($this->textColor);
 
         return $this;
     }
@@ -281,18 +287,6 @@ class InspirationFont
 
         // starting with a chunk smart on punctuation characters
         $this->text = chunkSmart($this->text, asString: true);
-        $this->imagickFont->text($this->text);
-        if ($this->doesTextFit()) {
-            return;
-        }
-
-        // not fitting, let's chunk by 4 words
-        $chunks = chunkText(
-            text: $this->text,
-            separator: " \n",
-            assemble: 4
-        );
-        $this->text = implode(PHP_EOL, $chunks);
         $this->imagickFont->text($this->text);
         if ($this->doesTextFit()) {
             return;

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Services;
 
-use App\Enums\Colors;
 use App\Models\Quote;
 use App\Services\CreateImage;
 use App\Services\InspirationPicture;
+use App\Services\TailwindColors;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -27,7 +27,9 @@ class CreateImageTest extends TestCase
     /** @test */
     public function get_should_return_inspiration_image(): void
     {
-        $inspirationPicture = CreateImage::create(300, 300, Colors::random())->get();
+        $color = TailwindColors::init()->getOne();
+
+        $inspirationPicture = CreateImage::create(width: 300, height: 300, bgColor: $color->dark(), fontColor: $color->light())->get();
 
         $this->assertNotNull($inspirationPicture);
         $this->assertInstanceOf(InspirationPicture::class, $inspirationPicture);

@@ -12,37 +12,10 @@ if (!function_exists('generateHash')) {
     }
 }
 
-if (!function_exists('chunkText')) {
-    function chunkText(string $text, string $separator, int $assemble = 0): array
-    {
-        $token = strtok($text, $separator);
-
-        $chunks = [];
-        while ($token !== false) {
-            $chunks[] = trim($token);
-            $token = strtok($separator);
-        }
-
-        strtok('', ''); // free mem
-
-        if ($assemble === 0) {
-            return $chunks;
-        }
-
-        $toWorkOn = array_chunk($chunks, $assemble);
-        $results = [];
-        foreach ($toWorkOn as $items) {
-            $results[] = implode(' ', $items);
-        }
-
-        return $results;
-    }
-}
-
 if (!function_exists('chunkSmart')) {
     function chunkSmart(string $text, bool $asString = false, string $glue = PHP_EOL): array|string
     {
-        $separators = ",;:.!?\n";
+        $separators = ",;:.!?\n\t";
         // check for [,.\n]
         $matches = preg_split("/([^{$separators}]+[{$separators}]+)/", $text, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
@@ -93,6 +66,7 @@ if (!function_exists('getContrastColor')) {
         if ($contrastRatio > 5) {
             return '#000000';
         }
+
         // if not, return white color.
         return '#FFFFFF';
     }

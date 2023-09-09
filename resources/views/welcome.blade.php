@@ -4,9 +4,9 @@
 
 @section('content')
 
-    <x-navigation :color="$color" activeRoute="index" />
+    <x-navigation :colorName="$colorName" activeRoute="index" />
 
-    <div class="md:hidden bg-{{ $color }}-900 rounded-lg p-2">
+    <div class="md:hidden bg-{{ $colorName }}-900 rounded-lg p-2">
         <!-- small version -->
         <h1 class="text-2xl font-semibold">{{ $pageTitle }}</h1>
 
@@ -17,7 +17,7 @@
         @include('partials/comment')
     </div>
 
-    <div class="hidden md:block bg-{{ $color }}-900 rounded-lg">
+    <div class="hidden md:block bg-{{ $colorName }}-900 rounded-lg">
         <!-- other one -->
         <div class="flex items-center max-w-screen-xl mx-auto px-4 xl:py-20">
             <div class="flex mx-auto">

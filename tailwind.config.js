@@ -8,7 +8,7 @@ export default {
     ],
     safelist: [
         {
-            pattern: /(bg|text|ring)-(gray|orange|red|green|blue|purple|pink|emerald|rose)-(\d+)/
+            pattern: /(bg|text|ring)-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(\d+)/
         },
     ],
     plugins: [],

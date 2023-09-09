@@ -6,13 +6,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Traits\Color;
 use App\Services\CreateImage;
+use App\Services\TailwindColors;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 
 class HomeController extends Controller
 {
-    use Color;
-
     protected array $emotes = ['🤔', '😌', '😎', '😊'];
 
     public function show(): View|Factory
@@ -22,16 +21,22 @@ class HomeController extends Controller
             Ecran-inpirant est là pour ca et en plus c'est gratuit.";
         $emote = $this->emotes[array_rand($this->emotes)];
 
-        $color = $this->randomColor();
+        $color = TailwindColors::init()->getOne();
+        $colorName = $color->name();
 
         $width = 400;
         $height = intval(round($width * 1.77777, 0)); // linkedin vertical image ratio
 
-        $inspirationPicture = CreateImage::create($width, $height, $color)->get();
+        $inspirationPicture = CreateImage::create(
+            width: $width,
+            height: $height,
+            bgColor: $color->byIndex(300),
+            fontColor: $color->dark()
+        )->get();
         $inspirationPicture->save(public_path('images/welcome.jpg'));
 
         $pageTitle = 'Ecran inspirant ' . $emote;
 
-        return view('welcome', compact('pageTitle', 'color', 'description', 'width', 'height'));
+        return view('welcome', compact('pageTitle', 'colorName', 'description', 'width', 'height'));
     }
 }

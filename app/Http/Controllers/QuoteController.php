@@ -9,6 +9,7 @@ use App\Services\FontPathSelector;
 use App\Services\GetPresetFrom;
 use App\Services\InspirationFont;
 use App\Services\InspirationPicture;
+use App\Services\TailwindColors;
 
 class QuoteController extends Controller
 {
@@ -68,11 +69,19 @@ class QuoteController extends Controller
             }
         }
 
+        // pick one color
+        $color = TailwindColors::init()->getOne();
+
         // create inspiration picture
-        $picture = InspirationPicture::create($resolutionWidth, $resolutionHeight, fake()->hexColor());
+        $picture = InspirationPicture::create($resolutionWidth, $resolutionHeight, $color->dark());
 
         // add text
-        $mainText = InspirationFont::create(picture: $picture, fontPath: $fontPath, text: $text)
+        $mainText = InspirationFont::create(
+            picture: $picture,
+            fontPath: $fontPath,
+            text: $text,
+            textColor: $color->light()
+        )
             ->alignMiddleCenter()
             ->applyToImage()
         ;
@@ -82,7 +91,13 @@ class QuoteController extends Controller
             $watermarkTextSize = $mainText->textSize() - 8;
         }
         // add Watermark
-        InspirationFont::create(picture: $picture, fontPath: $fontPath, text: config('app.domain'), textSize: $watermarkTextSize)
+        InspirationFont::create(
+            picture: $picture,
+            fontPath: $fontPath,
+            text: config('app.domain'),
+            textSize: $watermarkTextSize,
+            textColor: $color->light()
+        )
             ->alignBottomRight()
             ->applyToImage()
         ;

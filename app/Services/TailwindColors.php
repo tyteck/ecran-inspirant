@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\DTO\TailwindColor;
+use App\Exceptions\TailwindColorNotFoundException;
 use Illuminate\Support\Facades\File;
 
 class TailwindColors
@@ -26,16 +27,20 @@ class TailwindColors
         return new static(...$params);
     }
 
-    public function getOne(): string
+    public function getOne(): TailwindColor
     {
         $keys = array_keys($this->colors);
 
-        return $keys[array_rand($keys)];
+        return $this->colors[$keys[array_rand($keys)]];
     }
 
     public function get(string $colorToGet): TailwindColor
     {
-        throw_if
-        return
+        throw_unless(
+            in_array($colorToGet, array_keys($this->colors)),
+            new TailwindColorNotFoundException("This color {$colorToGet} do not exists.")
+        );
+
+        return $this->colors[$colorToGet];
     }
 }

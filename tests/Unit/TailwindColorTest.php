@@ -74,4 +74,22 @@ class TailwindColorTest extends TestCase
         $color = TailwindColor::fromArray($expectedColor, $this->pink);
         $this->assertEquals($expectedColor, $color->name());
     }
+
+    /** @test */
+    public function get_inter_color_should_succeed(): void
+    {
+        $color = TailwindColor::fromArray('pink', $this->pink);
+        $this->assertEquals($this->pink['400'], $color->inter());
+    }
+
+    /** @test */
+    public function get_rgb_color_should_succeed(): void
+    {
+        $color = TailwindColor::fromArray('pink', $this->pink);
+        $this->assertEquals($this->pink['400'], $color->byIndex(400));
+        $this->assertEquals($this->pink['500'], $color->byIndex('500'));
+
+        $this->expectException(TailwindColorIndexNotDefinedException::class);
+        $color->byIndex('8932');
+    }
 }

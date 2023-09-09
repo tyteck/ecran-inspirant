@@ -34,9 +34,12 @@ class InspirationPicture
         ;
     }
 
-    public static function create(...$params)
-    {
-        return new static(...$params);
+    public static function create(
+        int $width = self::DEFAULT_WIDTH,
+        int $height = self::DEFAULT_HEIGHT,
+        ?string $backgroundColor = null,
+    ) {
+        return new static($width, $height, $backgroundColor);
     }
 
     /**

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit;
 
 use App\DTO\TailwindColor;
+use App\Exceptions\TailwindColorNotFoundException;
 use App\Services\TailwindColors;
 use Tests\TestCase;
 
@@ -24,31 +25,31 @@ class TailwindColorsTest extends TestCase
     ];
 
     /** @test */
-    public function pick_one_should_succeed(): void
+    public function get_unknown_color_should_fail(): void
     {
-        $result = TailwindColors::init()->getOne();
-
-        $this->assertNotNull($result);
-        $this->assertTrue(in_array($result, $this->availableColors));
+        $this->expectException(TailwindColorNotFoundException::class);
+        TailwindColors::init()->get('unknown');
     }
 
     /** @test */
     public function get_color_should_succeed(): void
     {
-        $result = TailwindColors::init()->get('emerald');
+        array_map(function ($color): void {
+            $result = TailwindColors::init()->get($color);
 
-        $this->assertNotNull($result);
-        $this->assertInstanceOf(TailwindColor::class, $result);
+            $this->assertNotNull($result);
+            $this->assertInstanceOf(TailwindColor::class, $result);
+        }, $this->availableColors);
     }
 
     /** @test */
     public function pick_color_should_succeed(): void
     {
-        $result = TailwindColors::init()->pickOne();
+        $result = TailwindColors::init()->getOne();
 
         $this->assertNotNull($result);
-        $this->assertIsArray($result);
+        $this->assertInstanceOf(TailwindColor::class, $result);
 
-        $this->assertTrue(in_array($result, $this->availableColors));
+        $this->assertTrue(in_array($result->name(), $this->availableColors));
     }
 }
